@@ -1,5 +1,5 @@
 class BuildingsController < ApplicationController
-  before_action :find_building, only: [:show, :destroy, :edit]
+  before_action :find_building, only: [:show, :destroy, :edit, :update]
 
   def index
     @buildings = Building.all
@@ -15,6 +15,15 @@ class BuildingsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    @building.update(building_params)
+    if @building.save
+      redirect_to buildings_path
+    else
+      render :edit
+    end
   end
 
   def create
