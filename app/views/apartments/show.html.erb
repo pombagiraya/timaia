@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <col-4 class="col-md-6">
+      <h1><%= @apartment.building.building_name %></h1>
+      <h3>Apto <%= @apartment.apt_number %></h3>
+      <p>Owner: <%= @apartment.user.name %></p>
+      <p>Bill: <%= @apartment.bill %></p>
+    </col-4>
+  </div>
+  <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
+  <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+ <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
+</div>
