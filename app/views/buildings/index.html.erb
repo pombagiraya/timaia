@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6 col-md-8">
+      <h1>Buildings</h1>
+
+      <ul>
+        <% @buildings.each do |building| %>
+          <li>
+            <%= link_to building.building_name, building_path(building) %> -
+            <%= building.city %>/<%= building.province %>
+            <%= link_to "Edit", edit_building_path(building) %>
+            <%= link_to "Delete", building_path(building), method: :delete, data: {confirm: "Are you sure?"} %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <button type="button" class="btn btn-light"><%= link_to 'New Building', new_building_path %></button>
+</div>
