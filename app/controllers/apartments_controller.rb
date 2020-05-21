@@ -1,6 +1,6 @@
 class ApartmentsController < ApplicationController
   before_action :find_apartment, only: [:destroy, :edit, :update, :show]
-  before_action :find_building, only: [:new, :create, :index, :show]
+  before_action :find_building, only: [:new, :create, :index]
 
   def index
     @apartments = Apartment.all
@@ -8,6 +8,7 @@ class ApartmentsController < ApplicationController
   end
 
   def show
+    @building = Building.find(@apartment.building.id)
   end
 
   def new
@@ -54,7 +55,7 @@ class ApartmentsController < ApplicationController
   end
 
   def find_building
-    @building = Building.find(@apartment.building.id)
+    @building = Building.find(params[:building_id])
   end
 
   def apartment_params
