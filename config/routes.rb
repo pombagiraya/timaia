@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :buildings do
-    resources :apartments, only: [ :index, :new, :create]
+    resources :apartments, only: [ :index, :new, :create ]
   end
-  resources :apartments, only: [:show, :edit, :update, :destroy]
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :apartments, only: [ :show, :edit, :update, :destroy ] do
+    resources :payments, only: [ :index, :new, :create ]
+  end
+  resources :payments, only: [ :show, :edit, :update, :destroy ]
 end

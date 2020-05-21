@@ -5,9 +5,31 @@
       <h3>Apto <%= @apartment.apt_number %></h3>
       <p>Owner: <%= @apartment.user.name %></p>
       <p>Bill: <%= @apartment.bill %></p>
-    </col-4>
-  </div>
+
+  <h3>Payments</h3>
+  <button type="button" class="btn btn-light">
+    <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
+  </button>
+  <ul>
+    <% @apartment.payments.each do |payment| %>
+      <li>
+        <%= payment.payment_date %> -
+          <%= 
+          case payment.status
+            when 0 then 'On time'
+            when 1 then 'Overdue'
+            when 2 then 'Paid'
+          end
+          %>
+        <button type="button" class="btn btn-light"><%= link_to "Edit", edit_payment_path(payment) %></button>
+        <button type="button" class="btn btn-light"><%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+      </li>
+    <% end %>
+  </ul>
+
   <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
   <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
- <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
+  <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
+  </col-4>
+  </div>
 </div>
