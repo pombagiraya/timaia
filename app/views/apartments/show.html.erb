@@ -5,12 +5,11 @@
       <h3>Apto <%= @apartment.apt_number %></h3>
       <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
       <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
-      <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
       <p>Owner: <%= @apartment.user.name %></p>
       <p>Bill: <%= @apartment.bill %></p>
       <p>Total Unpaid: <%= @unpaid %></p>
       <p>Total Unpaid and Overdue: <%= @unpaid_delay %></p>
-      
+
   <h3>Payments</h3>
   <button type="button" class="btn btn-light">
     <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
@@ -28,14 +27,14 @@
     <% @apartment.payments.order(payment_date: :desc).each do |payment| %>
       <tr>
         <td><%= payment.payment_date %></td>
-        <td><%= 
+        <td><%=
           if payment.payment_date > Date.today
             'On time'
           else
             'Overdue'
           end
           %></td>
-        <td><%= 
+        <td><%=
           case payment.status
             when 0 then 'Unpaid'
             when 1 then 'Paid'
@@ -47,6 +46,8 @@
         </th>
       </td>
     <% end %>
+    </table>
+    <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
   </col-6>
   </div>
 </div>
