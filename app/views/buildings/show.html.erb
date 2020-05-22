@@ -30,8 +30,24 @@
         <tr>
           <th><%= link_to apartment.apt_number , apartment_path(apartment) %></th>
           <td><%= apartment.user.name %></td>
-          <td>falta valor</td>
-          <td>falta valor</td>
+          <td>
+          <% @apt_unpaid = 0 %>
+          <% apartment.payments.each do |payment|            
+            if payment.status == 0
+              @apt_unpaid += 1
+            end
+          end %>
+          <%= @apt_unpaid * apartment.bill %>
+          </td>
+          <td>
+          <% @apt_unpaid_delay = 0 %>
+          <% apartment.payments.each do |payment|            
+            if payment.status == 0 && payment.payment_date <= Date.today
+              @apt_unpaid_delay += 1
+            end
+          end %>
+          <%= @apt_unpaid_delay * apartment.bill %>          
+          </td>
           <td>
             <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(apartment) %></button>
             <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
