@@ -24,8 +24,8 @@ class ApartmentsController < ApplicationController
   def create
     @apartment = Apartment.new(apartment_params)
     @apartment.building = @building
-    #authorize(@apartment) -- Quando tiver pundit
-    #@apartment.user = current_user
+    authorize(@apartment)
+    @apartment.user = current_user
     if @apartment.save
       redirect_to building_path(@apartment.building_id)
     else
@@ -51,7 +51,7 @@ class ApartmentsController < ApplicationController
 
   def find_apartment
     @apartment = Apartment.find(params[:id])
-    #authorize(@apartment) -- Quando tiver pundit
+    authorize(@apartment)
   end
 
   def find_building
