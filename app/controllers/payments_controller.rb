@@ -22,14 +22,9 @@ class PaymentsController < ApplicationController
     def create
       @payment = Payment.new(payment_params)
       @payment.apartment = @apartment
-      if @payment.payment_date > Date.today
-        @payment.status = 0
-      else
-        @payment.status = 1
-      end
-        # 0 no prazo
-        # 1 atrasada
-        # 2 paga
+      @payment.status = 0
+        # 0 não paga
+        # 1 paga
       #authorize(@payment) -- Quando tiver pundit
       if @payment.save
         redirect_to apartment_path(params[:apartment_id])
