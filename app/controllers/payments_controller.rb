@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
 
     def index
       @payments = Payment.all
-      # @payments = policy_scope(Payment).all -- Quando tiver pundit
+      @payments = policy_scope(Payment).all
     end
   
     def show
@@ -13,7 +13,7 @@ class PaymentsController < ApplicationController
   
     def new
       @payment = Payment.new
-      #authorize(@payment) -- Quando tiver pundit
+      authorize(@payment)
     end
   
     def edit
@@ -30,7 +30,7 @@ class PaymentsController < ApplicationController
         # 0 no prazo
         # 1 atrasada
         # 2 paga
-      #authorize(@payment) -- Quando tiver pundit
+      authorize(@payment)
       if @payment.save
         redirect_to apartment_path(params[:apartment_id])
       else
@@ -56,7 +56,7 @@ class PaymentsController < ApplicationController
   
     def find_payment
       @payment = Payment.find(params[:id])
-      #authorize(@payment) -- Quando tiver pundit
+      authorize(@payment)
     end
   
     def find_apartment
