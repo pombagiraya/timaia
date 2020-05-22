@@ -3,7 +3,7 @@ class BuildingsController < ApplicationController
 
   def index
     @buildings = Building.all
-    # @buildings = policy_scope(Building).all -- Quando tiver pundit
+    @buildings = policy_scope(Building).all
   end
 
   def show
@@ -11,7 +11,7 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
   end
 
   def edit
@@ -28,7 +28,7 @@ class BuildingsController < ApplicationController
 
   def create
     @building = Building.new(building_params)
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
     @building.user = current_user
     if @building.save
       redirect_to buildings_path
@@ -46,7 +46,7 @@ class BuildingsController < ApplicationController
 
   def find_building
     @building = Building.find(params[:id])
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
   end
 
   def building_params
