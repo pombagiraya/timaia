@@ -15,7 +15,7 @@ class ApartmentsController < ApplicationController
       if payment.status == 0 && payment.payment_date <= Date.today
         @unpaid += 1
         @unpaid_delay +=1
-      elsif payment.status == 0 
+      elsif payment.status == 0
         @unpaid += 1
       end
     end
@@ -26,7 +26,7 @@ class ApartmentsController < ApplicationController
   def new
     @apartment = Apartment.new
     @users = User.all
-    #authorize(@apartment) -- Quando tiver pundit
+    authorize(@apartment)
   end
 
   def edit
