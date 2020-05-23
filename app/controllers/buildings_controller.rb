@@ -2,8 +2,7 @@ class BuildingsController < ApplicationController
   before_action :find_building, only: [:show, :destroy, :edit, :update]
 
   def index
-    @buildings = Building.all
-    # @buildings = policy_scope(Building).all -- Quando tiver pundit
+    @buildings = policy_scope(Building).all
     @buildings.each do |building|
       default_rate = 0
       building.apartments.each do |apartment|
@@ -16,7 +15,6 @@ class BuildingsController < ApplicationController
         default_rate += 1 if apto_unpaid > 0
       end
       @default_rate = (default_rate*1.00 / building.apartments.count*1.00)* 100.0
-    end
   end
 
   def show
@@ -42,7 +40,7 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
   end
 
   def edit
@@ -59,7 +57,7 @@ class BuildingsController < ApplicationController
 
   def create
     @building = Building.new(building_params)
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
     @building.user = current_user
     if @building.save
       redirect_to buildings_path
@@ -77,7 +75,7 @@ class BuildingsController < ApplicationController
 
   def find_building
     @building = Building.find(params[:id])
-    #authorize(@building) -- Quando tiver pundit
+    authorize(@building)
   end
 
   def building_params
