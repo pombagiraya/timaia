@@ -7,8 +7,8 @@
       <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
       <p>Owner: <%= @apartment.user.name %></p>
       <p>Bill: <%= @apartment.bill %></p>
-      <p>Total Unpaid: <%= @unpaid %></p>
-      <p>Total Unpaid and Overdue: <%= @unpaid_delay %></p>
+      <p>Total Unpaid: <%= @apartment.unpaid %></p>
+      <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>
 
   <h3>Payments</h3>
   <button type="button" class="btn btn-light">
@@ -27,19 +27,8 @@
     <% @apartment.payments.order(payment_date: :desc).each do |payment| %>
       <tr>
         <td><%= payment.payment_date %></td>
-        <td><%=
-          if payment.payment_date > Date.today
-            'On time'
-          else
-            'Overdue'
-          end
-          %></td>
-        <td><%=
-          case payment.status
-            when 0 then 'Unpaid'
-            when 1 then 'Paid'
-          end
-          %></td>
+        <td><%= payment.deadline %></td>
+        <td><%= payment.paid %></td>
         <td>
           <button type="button" class="btn btn-light"><%= link_to "Edit", edit_payment_path(payment) %></button>
           <button type="button" class="btn btn-light"><%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %></button>

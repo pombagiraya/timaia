@@ -8,6 +8,37 @@ class Apartment < ApplicationRecord
   validates :building_id, presence: true
   validates :user_id, presence: true
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |apartment|
+        csv << apartment.attributes.values_at(*column_names)
+      end
+    end
+  end
+
+  def unpaid
+    unpaid = 0
+    self.payments.each do |payment|
+      if payment.status == 0
+        unpaid += 1
+      end
+    end
+    unpaid *= self.bill
+    return unpaid
+  end
+
+  def unpaid_delay
+    unpaid_delay = 0
+    self.payments.each do |payment|
+      if payment.status == 0 && payment.payment_date <= Date.today
+        unpaid_delay += 1
+      end
+    end
+    unpaid_delay *= self.bill
+    return unpaid_delay
+  end
+
   def self.search(user)
     user = Apartment.user_id
     Apartment.find(user)

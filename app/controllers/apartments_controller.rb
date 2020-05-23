@@ -4,22 +4,15 @@ class ApartmentsController < ApplicationController
 
   def index
     @apartments = policy_scope(Apartment)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @apartments.to_csv }
+      format.xls { send_data @apartments.to_csv(col_sep: "\t"), row_sep: "\n" }
+    end
   end
 
   def show
     @building = Building.find(@apartment.building.id)
-    @unpaid = 0
-    @unpaid_delay = 0
-    @apartment.payments.each do |payment|
-      if payment.status == 0 && payment.payment_date <= Date.today
-        @unpaid += 1
-        @unpaid_delay +=1
-      elsif payment.status == 0
-        @unpaid += 1
-      end
-    end
-    @unpaid *= @apartment.bill
-    @unpaid_delay *= @apartment.bill
   end
 
   def new
