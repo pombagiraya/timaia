@@ -10,4 +10,60 @@ class Building < ApplicationRecord
   validates :province, presence: true, length: { is: 2 }
   validates :country, presence: true, length: {minimum: 2}
   validates :user_id, presence: true
+
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |building|
+        csv << building.attributes.values.at(*column_name)
+      end
+    end  
+  end
+
+  def unpaid
+    unpaid = 0
+    self.apartments.each do |apartment|
+      apartment.payments.each do |payment|
+        if payment.status == 0
+          unpaid += apartment.bill
+        end
+      end
+    end
+    return unpaid
+  end
+
+  def unpaid_delay
+    unpaid_delay = 0
+    self.apartments.each do |apartment|
+      apartment.payments.each do |payment|
+        if payment.status == 0 && payment.payment_date <= Date.today
+          unpaid_delay += apartment.bill
+        end
+      end
+    end
+    return unpaid_delay
+  end
+
+  def default_rate
+    default_rate = 0
+    self.apartments.each do |apartment|
+      apto_unpaid = 0
+      apartment.payments.each do |payment|
+        if payment.status == 0
+          apto_unpaid += apartment.bill
+        end
+      end
+      default_rate += 1 if apto_unpaid > 0
+    end
+    return (default_rate*1.00 / self.apartments.count*1.00)* 100.0
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |building|
+        csv << building.attributes.values_at(*column_names)
+      end
+    end  
+  end
 end

@@ -3,8 +3,7 @@ class PaymentsController < ApplicationController
     before_action :find_apartment, only: [:new, :create, :index, :show]
 
     def index
-      @payments = Payment.all
-      @payments = policy_scope(Payment).all
+      @payments = policy_scope(Payment)
     end
   
     def show

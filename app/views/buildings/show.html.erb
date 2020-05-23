@@ -5,12 +5,18 @@
       <h3><%= @building.user.name %></h3>
       <button type="button" class="btn btn-light"><%= link_to "Edit", edit_building_path(@building) %></button>
       <button type="button" class="btn btn-light"><%= link_to "Delete", building_path(@building), method: :delete, data: {confirm: "Are you sure?"} %></button>
-      <p>Total Unpaid: <%= @unpaid %></p>
-      <p>Total Unpaid and Overdue: <%= @unpaid_delay %></p>
-      <p>Default Rate: <%= @default_rate %>%</p>
+      <p>Total Unpaid: <%= @building.unpaid %></p>
+      <p>Total Unpaid and Overdue: <%= @building.unpaid_delay %></p>
+      <p>Default Rate: <%= @building.default_rate %>%</p>
       <p><%= @building.city %>/<%= @building.province %></p>
       <p><%= @building.zipcode %> <%= @building.country %></p>
       <p><%= @building.super_name %> - <%= @building.super_email %></p>
+
+      <p>
+        Download:
+        <%= link_to "CSV", building_apartments_path(@building, format: "csv") %> 
+        <%= link_to "XLS", building_apartments_path(@building, format: "xls") %>
+      </p>
 
       <h3>Apartments</h3>
       <button type="button" class="btn btn-light">
@@ -31,24 +37,8 @@
         <tr>
           <th><%= link_to apartment.apt_number , apartment_path(apartment) %></th>
           <td><%= apartment.user.name %></td>
-          <td>
-          <% @apt_unpaid = 0 %>
-          <% apartment.payments.each do |payment|
-            if payment.status == 0
-              @apt_unpaid += 1
-            end
-          end %>
-          <%= @apt_unpaid * apartment.bill %>
-          </td>
-          <td>
-          <% @apt_unpaid_delay = 0 %>
-          <% apartment.payments.each do |payment|
-            if payment.status == 0 && payment.payment_date <= Date.today
-              @apt_unpaid_delay += 1
-            end
-          end %>
-          <%= @apt_unpaid_delay * apartment.bill %>
-          </td>
+          <td><%= apartment.unpaid %></td>
+          <td><%= apartment.unpaid_delay %></td>
           <td>
             <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(apartment) %></button>
             <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>

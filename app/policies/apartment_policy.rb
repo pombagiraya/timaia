@@ -6,7 +6,7 @@ class ApartmentPolicy < ApplicationPolicy
   end
 
   def index?
-  is_manager_or_admin?
+    is_manager_or_admin?
   end
 
   def new?
@@ -30,6 +30,10 @@ class ApartmentPolicy < ApplicationPolicy
   end
 
   def show?
+    is_manager_or_admin?
+  end
+
+  def export?
     is_manager_or_admin?
   end
 
