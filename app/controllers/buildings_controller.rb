@@ -15,6 +15,7 @@ class BuildingsController < ApplicationController
         default_rate += 1 if apto_unpaid > 0
       end
       @default_rate = (default_rate*1.00 / building.apartments.count*1.00)* 100.0
+    end
   end
 
   def show
