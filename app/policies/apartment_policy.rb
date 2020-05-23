@@ -1,7 +1,11 @@
 class ApartmentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      if user.role == 1 || user.role == 2
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 
@@ -33,8 +37,8 @@ class ApartmentPolicy < ApplicationPolicy
     is_manager_or_admin?
   end
 
-  def export?
-    is_manager_or_admin?
+  def user_apartments?
+    true
   end
 
   private

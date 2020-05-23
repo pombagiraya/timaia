@@ -39,4 +39,8 @@ class Apartment < ApplicationRecord
     return unpaid_delay
   end
 
+  def self.search(user)
+    user = Apartment.user_id
+    Apartment.find(user)
+  end
 end

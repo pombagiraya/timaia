@@ -1,6 +1,6 @@
 class ApartmentsController < ApplicationController
   before_action :find_apartment, only: [:destroy, :edit, :update, :show]
-  before_action :find_building, only: [:new, :create, :index]
+  before_action :find_building, only: [:new, :create ]
 
   def index
     @apartments = policy_scope(Apartment)
@@ -42,6 +42,11 @@ class ApartmentsController < ApplicationController
     redirect_to building_path(@apartment.building_id)
   end
 
+  def user_apartment
+    user = current_user.id
+    Apartment.search(user)
+  end
+
   def update
     @apartment.update(apartment_params)
     if @apartment.save
@@ -49,7 +54,7 @@ class ApartmentsController < ApplicationController
     else
       render :edit
     end
-  end
+  end 
 
   private
 
@@ -64,5 +69,9 @@ class ApartmentsController < ApplicationController
 
   def apartment_params
     params.require(:apartment).permit(:apt_number, :bill, :user_id)
+  end
+
+  def find_apartments(user_id)
+    @apartments = Apartment.where(user_id: params[:user_id])
   end
 end
