@@ -11,15 +11,6 @@ class Building < ApplicationRecord
   validates :country, presence: true, length: {minimum: 2}
   validates :user_id, presence: true
 
-  def self.to_csv
-    CSV.generate do |csv|
-      csv << column_names
-      all.each do |building|
-        csv << building.attributes.values.at(*column_name)
-      end
-    end  
-  end
-
   def unpaid
     unpaid = 0
     self.apartments.each do |apartment|
@@ -56,14 +47,5 @@ class Building < ApplicationRecord
       default_rate += 1 if apto_unpaid > 0
     end
     return (default_rate*1.00 / self.apartments.count*1.00)* 100.0
-  end
-
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << column_names
-      all.each do |building|
-        csv << building.attributes.values_at(*column_names)
-      end
-    end  
   end
 end

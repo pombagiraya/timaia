@@ -10,9 +10,9 @@ class Apartment < ApplicationRecord
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << column_names
+      csv << attributes = %w{building_name apt_number bill name email }
       all.each do |apartment|
-        csv << apartment.attributes.values_at(*column_names)
+        csv << apartment.attributes.values_at(*attributes)
       end
     end
   end
