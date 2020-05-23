@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   resources :buildings do
-    resources :apartments, only: [ :new, :create ]
+    resources :apartments, only: [ :new, :create, :index ]
   end
   resources :apartments, only: [ :show, :edit, :update, :destroy ] do
     resources :payments, only: [ :index, :new, :create ]

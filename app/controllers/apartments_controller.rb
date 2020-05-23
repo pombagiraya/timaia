@@ -1,13 +1,13 @@
 class ApartmentsController < ApplicationController
   before_action :find_apartment, only: [:destroy, :edit, :update, :show]
-  before_action :find_building, only: [:new, :create ]
+  before_action :find_building, only: [:new, :create]
 
   def index
     @apartments = policy_scope(Apartment)
     respond_to do |format|
       format.html
-      format.csv { send_data @apartments.to_csv }
-      format.xls { send_data @apartments.to_csv(col_sep: "\t"), row_sep: "\n" }
+      format.csv { send_data @apartments.to_csv(headers: true) }
+      format.xls
     end
   end
 
