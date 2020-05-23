@@ -1,4 +1,4 @@
-class PaymentsPolicy < ApplicationPolicy
+class PaymentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
@@ -6,7 +6,7 @@ class PaymentsPolicy < ApplicationPolicy
   end
 
   def index?
-    is_manager_or_admin?
+    true
   end
 
   def new?
