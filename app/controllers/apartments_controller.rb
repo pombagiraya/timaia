@@ -9,6 +9,18 @@ class ApartmentsController < ApplicationController
 
   def show
     @building = Building.find(@apartment.building.id)
+    @unpaid = 0
+    @unpaid_delay = 0
+    @apartment.payments.each do |payment|
+      if payment.status == 0 && payment.payment_date <= Date.today
+        @unpaid += 1
+        @unpaid_delay +=1
+      elsif payment.status == 0 
+        @unpaid += 1
+      end
+    end
+    @unpaid *= @apartment.bill
+    @unpaid_delay *= @apartment.bill
   end
 
   def new
