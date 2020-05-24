@@ -10,7 +10,7 @@ class ApartmentsController < ApplicationController
       format.xls
     end
   end
-
+  
   def show
     @building = Building.find(@apartment.building.id)
   end
