@@ -6,11 +6,11 @@ class ApartmentsController < ApplicationController
     @apartments = policy_scope(Apartment)
     respond_to do |format|
       format.html
-      format.csv { send_data @apartments.to_csv(headers: true) }
+      format.csv { send_data @apartments.to_csv }
       format.xls
     end
   end
-  
+
   def show
     @building = Building.find(@apartment.building.id)
   end

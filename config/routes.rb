@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   end
 
   resources :buildings do
-    resources :apartments, only: [ :new, :create, :index ]
+    collection { post :import }
+    resources :apartments, only: [ :new, :create, :index ] do
+    end
   end
   resources :apartments, only: [ :show, :edit, :update, :destroy ] do
     resources :payments, only: [ :index, :new, :create ]

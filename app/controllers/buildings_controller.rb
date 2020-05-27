@@ -16,6 +16,11 @@ class BuildingsController < ApplicationController
   def edit
   end
 
+  def import
+    Apartment.import(params[:file])
+    redirect_to root_url, notice: "Apartments imported."
+  end
+
   def update
     @building.update(building_params)
     if @building.save

@@ -18,6 +18,14 @@
         <%= link_to "XLS", building_apartments_path(@building, format: "xls") %>
       </p>
 
+      <p>
+        Import:
+        <%= form_tag import_buildings_path, multipart: true do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag "Import" %>
+        <% end %>
+      </p>
+
       <h3>Apartments</h3>
       <button type="button" class="btn btn-light">
         <%= link_to 'New Apartment', new_building_apartment_path(@building) %>
