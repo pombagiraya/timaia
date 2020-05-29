@@ -1,13 +1,21 @@
-<div>
-    <div class="header" style="margin:16px">
-        <h1>Timaia</h1>
-    </div>
-    <div class="flexbox">
-        <div class="container" style="margin: 12px">
-            <button type="button" class="btn btn-light"><%= link_to 'Buildings', buildings_path %></button>
+<% if user_signed_in? %>
+    <div>
+        <div class="header" style="margin:16px">
+            <h1>Timaia</h1>
         </div>
-        <div class="container" style="margin: 12px">
-            <button type="button" class="btn btn-light"><%= link_to 'My apartments', '/apartments/user_apartments' %></button>
+        <div class="flexbox">
+            <div class="container" style="margin: 12px">
+                <button type="button" class="btn btn-light"><%= link_to 'Buildings', buildings_path %></button>
+            </div>
+            <div class="container" style="margin: 12px">
+                <button type="button" class="btn btn-light"><%= link_to 'My apartments', user_apartments_path(current_user) %></button>
+            </div>
         </div>
     </div>
-</div>
+<% else%>
+    <div>
+        <div class="header" style="margin:16px">
+            <h1>Timaia</h1>
+        </div>
+    </div>
+<%end%>
