@@ -14,8 +14,15 @@
 
       <p>
         Download:
-        <%= link_to "CSV", building_apartments_path(@building, format: "csv") %> 
-        <%= link_to "XLS", building_apartments_path(@building, format: "xls") %>
+        <%= link_to "Export", building_export_path(@building, format: "xlsx") %>
+      </p>
+
+      <p>
+        Import:
+        <%= form_tag import_buildings_path, multipart: true do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag "Import" %>
+        <% end %>
       </p>
 
       <h3>Apartments</h3>

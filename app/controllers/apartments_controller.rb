@@ -4,13 +4,8 @@ class ApartmentsController < ApplicationController
 
   def index
     @apartments = policy_scope(Apartment)
-    respond_to do |format|
-      format.html
-      format.csv { send_data @apartments.to_csv(headers: true) }
-      format.xls
-    end
   end
-  
+
   def show
     @building = Building.find(@apartment.building.id)
   end
@@ -34,11 +29,13 @@ class ApartmentsController < ApplicationController
     else
       render :new
     end
+    flash[:notice] = "Apartment created."
   end
 
   def destroy
     @apartment.destroy
     redirect_to building_path(@apartment.building_id)
+    flash[:notice] = "Apartment deleted."
   end
 
   def user_apartment
@@ -53,6 +50,7 @@ class ApartmentsController < ApplicationController
     else
       render :edit
     end
+    flash[:notice] = "Apartment updated."
   end 
 
   private

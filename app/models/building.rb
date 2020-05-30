@@ -48,4 +48,30 @@ class Building < ApplicationRecord
     end
     return (default_rate*1.00 / self.apartments.count*1.00)* 100.0
   end
+
+  def self.import(file)
+    workbook = RubyXL::Parser.parse(file)
+    worksheet = workbook[0]
+    rowCount = worksheet.sheet_data.rows.size
+    i = 1
+    (rowCount -1).times do
+      user = User.where(email: worksheet[i][4].value).first
+      if user.nil?
+        user = User.new
+        user.email = worksheet[i][4].value
+        user.name = worksheet[i][3].value
+        user.password = '123456'
+        user.role = 1
+        user.save!
+      end
+      apartment = Apartment.where(apt_number: worksheet[i][1].value).where(building: Building.where(building_name: worksheet[i][0].value)).first
+      apartment = Apartment.new if apartment.nil?
+      apartment.apt_number = worksheet[i][1].value
+      apartment.building_id = Building.where(building_name: worksheet[i][0].value).first.id
+      apartment.bill = worksheet[i][2].value
+      apartment.user_id = user.id
+      apartment.save!
+      i += 1
+    end
+  end
 end

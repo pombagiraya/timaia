@@ -8,15 +8,6 @@ class Apartment < ApplicationRecord
   validates :building_id, presence: true
   validates :user_id, presence: true
 
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << ['Building', 'Apto Number', 'Bill ($)', 'Owner Name', 'Owner E-mail']
-      all.each do |apartment|
-        csv << [apartment.building.building_name, apartment.apt_number, apartment.bill, apartment.user.name, apartment.user.email ]
-      end
-    end
-  end
-
   def unpaid
     unpaid = 0
     self.payments.each do |payment|
