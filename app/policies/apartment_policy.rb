@@ -41,9 +41,21 @@ class ApartmentPolicy < ApplicationPolicy
     true
   end
 
+  def admin_view?
+    is_manager_or_admin?
+  end
+
+  def owner_view?
+    is_owner?
+  end
+  
   private
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
+  end
+
+  def is_owner?
+    user.role == 0
   end
 end

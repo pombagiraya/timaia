@@ -3,7 +3,7 @@ class BuildingPolicy < ApplicationPolicy
     def resolve
       if user.role == 2
         scope.all
-      else
+      else user.role == 1
         scope.where(user: user)
       end
     end
@@ -45,5 +45,9 @@ class BuildingPolicy < ApplicationPolicy
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
+  end
+
+  def no_access
+    page_error_path
   end
 end

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
 
+  get '/error', to: 'pages#errorpage', as: 'page_error'
+
   resources :users, only: [] do
     resources :apartments, only: [ :index ]
   end

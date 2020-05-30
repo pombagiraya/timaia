@@ -29,7 +29,6 @@ class ApartmentsController < ApplicationController
     @apartment = Apartment.new(apartment_params)
     @apartment.building = @building
     authorize(@apartment)
-    @apartment.user = current_user
     if @apartment.save
       redirect_to building_path(@apartment.building_id)
     else
