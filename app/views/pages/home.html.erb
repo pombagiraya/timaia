@@ -2,8 +2,14 @@
     <div class="mx-auto my-5 d-flex justify-content-around">
         <div class="align-self-center">
             <h3 class="">Your real estate solution</h3>
-            <button type="button" class="btn btn-success btn-lg btn-block mt-5 text-white"><%= link_to 'My Buildings', buildings_path %></button>
-            <button type="button" class="btn btn-success btn-lg btn-block mt-3"><%= link_to 'My Apartments', user_apartments_path(current_user) %></button>
+            <% if user_signed_in? %>
+                <% if current_user.role > 0 %>
+                    <button type="button" class="btn btn-success btn-lg btn-block mt-5 text-white"><%= link_to 'My Buildings', buildings_path %></button>
+                <% end %>
+                <% if current_user.role == 0 %>
+                    <button type="button" class="btn btn-success btn-lg btn-block mt-3"><%= link_to 'My Apartments', user_apartments_path(current_user) %></button>
+                <% end %>
+            <% end %>
         </div>
         <div>
             <%= image_tag("building.png", size: "346x368") %>
