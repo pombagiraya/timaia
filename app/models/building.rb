@@ -46,7 +46,8 @@ class Building < ApplicationRecord
       end
       default_rate += 1 if apto_unpaid > 0
     end
-    return (default_rate*1.00 / self.apartments.count*1.00)* 100.0 rescue 0
+    index = ((default_rate*1.00 / self.apartments.count*1.00)* 100.0).round(1)
+    return index.to_f.nan? ? 0.0 : index 
   end
 
   def self.import(file)
