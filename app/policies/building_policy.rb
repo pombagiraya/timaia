@@ -1,8 +1,11 @@
 class BuildingPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      #scope.all -- vou mostrar só os buildings do usuário
-      scope.where(user: user)
+      if user.role == 2
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 
@@ -32,6 +35,10 @@ class BuildingPolicy < ApplicationPolicy
 
   def show?
     is_manager_or_admin?
+  end
+
+  def import?
+    is_manager_or_admin
   end
 
   private

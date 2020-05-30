@@ -3,17 +3,29 @@
     <col-6 class="col-md-8">
       <h1><%= @apartment.building.building_name %></h1>
       <h3>Apto <%= @apartment.apt_number %></h3>
-      <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
-      <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
-      <p>Owner: <%= @apartment.user.name %></p>
-      <p>Bill: <%= @apartment.bill %></p>
-      <p>Total Unpaid: <%= @apartment.unpaid %></p>
-      <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>
+      <% if current_user.role == 1 || current_user.role == 2 %>
+        <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
+        <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+        <p>Owner: <%= @apartment.user.name %></p>
+        <p>Bill: <%= @apartment.bill %></p>
+        <p>Total Unpaid: <%= @apartment.unpaid %></p>
+        <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>
+      <% else %>
+        <h4>Your Info:</h4>
+        <p>Nome: <%= @apartment.user.name %></p>
+        <p>Bill: <%= @apartment.bill %></p>
+        <p>Your debit: <%= @apartment.unpaid %></p>
+        <p>Debits overdue: <%= @apartment.unpaid_delay %></p>
+      <% end%>
 
-  <h3>Payments</h3>
-  <button type="button" class="btn btn-light">
-    <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
-  </button>
+  <% if current_user.role == 1 || current_user.role == 2 %>
+    <h3>Payments</h3>
+    <button type="button" class="btn btn-light">
+      <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
+    </button>
+  <% else %>
+    <h2>Your payments:</h2>
+  <% end %>
   <table class="table">
     <thead>
     <tr>
@@ -30,13 +42,17 @@
         <td><%= payment.deadline %></td>
         <td><%= payment.paid %></td>
         <td>
-          <button type="button" class="btn btn-light"><%= link_to "Edit", edit_payment_path(payment) %></button>
-          <button type="button" class="btn btn-light"><%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+          <% if current_user.role == 1 || current_user.role == 2 %>
+            <button type="button" class="btn btn-light"><%= link_to "Edit", edit_payment_path(payment) %></button>
+            <button type="button" class="btn btn-light"><%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+          <% else %>
+            <button type="button" class="btn btn-light"><%= link_to "Pay", "#" %></button>
+          <% end%>
         </th>
       </td>
     <% end %>
     </table>
-    <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@apartment.building_id) %></button>
+    <button type="button" class="btn btn-light"><%= link_to 'Back', user_apartments_path(current_user) %></button>
   </col-6>
   </div>
 </div>

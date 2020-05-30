@@ -34,7 +34,7 @@ class ApartmentPolicy < ApplicationPolicy
   end
 
   def show?
-    is_manager_or_admin?
+    true
   end
 
   def user_apartments?

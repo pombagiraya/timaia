@@ -10,6 +10,7 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
+    @users = User.all
     authorize(@building)
   end
 

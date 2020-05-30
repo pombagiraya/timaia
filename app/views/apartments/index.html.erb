@@ -1,15 +1,26 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <col-6 class="col-md-8">
-      <% @apartments.each do |apartment| %>
-        <h2><%= apartment.building.building_name %></h2>
-        <h3>Apto: <%= apartment.apt_number %></h3>
-        <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(apartment) %></button>
-        <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
-        <p>Bill: <%= apartment.bill %></p>
-        <p>Total Unpaid: <%= @unpaid %></p>
-        <p>Total Unpaid and Overdue: <%= @unpaid_delay %></p>
-      <% end %>
-    </col-6>
-  </div>
-</div>
+<table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Building</th>
+      <th scope="col">Apartment</th>
+      <th scope="col">Owner</th>
+      <th scope ="col">Bill</th>
+      <th scope="col">Unpaid in Due</th>
+      <th scope="col">Unpaid Overdue</th>
+      <th scope="col">More info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @apartments.each do |apartment|%>
+      <tr>
+        <td><%= apartment.building.building_name %></td>
+        <td><%= apartment.apt_number %></td>
+        <td><%= apartment.user.name %></td>
+        <td><%= apartment.bill%></td>
+        <td><%= apartment.unpaid %></td>
+        <td><%= apartment.unpaid_delay %></td>
+        <td><%= link_to "More info", apartment_path(apartment) %></button></td>
+      </th>
+      </td>
+    <%end%>
+</table>
