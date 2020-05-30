@@ -34,6 +34,10 @@ class BuildingPolicy < ApplicationPolicy
     is_manager_or_admin?
   end
 
+  def import?
+    is_manager_or_admin?
+  end
+
   private
 
   def is_manager_or_admin?

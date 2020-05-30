@@ -1,5 +1,6 @@
 class BuildingsController < ApplicationController
   before_action :find_building, only: [:show, :destroy, :edit, :update]
+  before_action :skip_authorization, only: [:import, :export]
 
   def index
     @buildings = policy_scope(Building)
@@ -16,11 +17,6 @@ class BuildingsController < ApplicationController
   def edit
   end
 
-  def import
-    Apartment.import(params[:file])
-    redirect_to root_url, notice: "Apartments imported."
-  end
-
   def update
     @building.update(building_params)
     if @building.save
@@ -28,6 +24,7 @@ class BuildingsController < ApplicationController
     else
       render :edit
     end
+    flash[:notice] = "Building updated."
   end
 
   def create
@@ -39,11 +36,52 @@ class BuildingsController < ApplicationController
     else
       render :new
     end
+    flash[:notice] = "Building created."
   end
 
   def destroy
     @building.destroy
     redirect_to buildings_path
+    flash[:notice] = "Building deleted."
+  end
+
+  def import
+    Building.import(params[:file])
+    redirect_back(fallback_location: root_path)
+    flash[:notice] = "Apartments imported."
+  end
+
+  def export
+    @building = Building.find(params[:building_id])
+    name = @building.building_name
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+    i = 1
+    worksheet.add_cell(0, 0, 'Building')
+    worksheet.add_cell(0, 1, 'Apto Number')
+    worksheet.add_cell(0, 2, 'Bill ($)')
+    worksheet.add_cell(0, 3, 'Owner Name')
+    worksheet.add_cell(0, 4, 'Owner E-mail')
+    if @building.apartments.count > 0
+      @building.apartments.each do |apartment|
+        worksheet.add_cell(i, 0, name)
+        worksheet.add_cell(i, 1, apartment.apt_number)
+        worksheet.add_cell(i, 2, apartment.bill)
+        worksheet.add_cell(i, 3, apartment.user.name)
+        worksheet.add_cell(i, 4, apartment.user.email)
+        i += 1
+      end
+    else
+      worksheet.add_cell(1, 0, name)
+      worksheet.add_cell(1, 1, '')
+      worksheet.add_cell(1, 2, '')
+      worksheet.add_cell(1, 3, '')
+      worksheet.add_cell(1, 4, '')
+    end
+    respond_to do |format|
+      format.xlsx { send_data workbook.stream.read, filename: "#{@building.building_name}.xlsx" }
+    end
+    flash[:notice] = "Apartments exported."
   end
 
   private

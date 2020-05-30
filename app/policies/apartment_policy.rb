@@ -41,6 +41,14 @@ class ApartmentPolicy < ApplicationPolicy
     true
   end
 
+  def import?
+    is_manager_or_admin?
+  end
+
+  def self.import?
+    is_manager_or_admin?
+  end
+
   private
 
   def is_manager_or_admin?

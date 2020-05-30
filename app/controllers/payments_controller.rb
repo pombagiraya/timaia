@@ -30,11 +30,13 @@ class PaymentsController < ApplicationController
       else
         render :new
       end
+      flash[:notice] = "Payment created."
     end
   
     def destroy
       @payment.destroy
       redirect_to apartment_path(@payment.apartment_id)
+      flash[:notice] = "Payment deleted."
     end
   
     def update
@@ -44,6 +46,7 @@ class PaymentsController < ApplicationController
       else
         render :edit
       end
+      flash[:notice] = "Payment updated."
     end
   
     private

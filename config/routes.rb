@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :buildings do
     collection { post :import }
+    get :export, defaults: { format: 'xslx' }
     resources :apartments, only: [ :new, :create, :index ] do
     end
   end
