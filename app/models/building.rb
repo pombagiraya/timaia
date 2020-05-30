@@ -46,7 +46,7 @@ class Building < ApplicationRecord
       end
       default_rate += 1 if apto_unpaid > 0
     end
-    return (default_rate*1.00 / self.apartments.count*1.00)* 100.0
+    return (default_rate*1.00 / self.apartments.count*1.00)* 100.0 rescue 0
   end
 
   def self.import(file)
@@ -61,7 +61,7 @@ class Building < ApplicationRecord
         user.email = worksheet[i][4].value
         user.name = worksheet[i][3].value
         user.password = '123456'
-        user.role = 1
+        user.role = 0
         user.save!
       end
       apartment = Apartment.where(apt_number: worksheet[i][1].value).where(building: Building.where(building_name: worksheet[i][0].value)).first
