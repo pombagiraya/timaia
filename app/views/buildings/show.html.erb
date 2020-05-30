@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <col-6 class="col-md-8">
       <h1><%= @building.building_name %></h1>
-      <h3><%= @building.user.name %></h3>
+      <h4><%= @building.user.name %></h4>
       <button type="button" class="btn btn-light"><%= link_to "Edit", edit_building_path(@building) %></button>
       <button type="button" class="btn btn-light"><%= link_to "Delete", building_path(@building), method: :delete, data: {confirm: "Are you sure?"} %></button>
       <p>Total Unpaid: <%= @building.unpaid %></p>
@@ -29,8 +29,8 @@
       <button type="button" class="btn btn-light">
         <%= link_to 'New Apartment', new_building_apartment_path(@building) %>
       </button>
-      <table class="table">
-    <thead>
+      <table class="table table-borderless">
+    <thead class="thead-light">
     <tr>
       <th scope="col">Apto</th>
       <th scope="col">Owner</th>
