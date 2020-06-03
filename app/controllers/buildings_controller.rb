@@ -11,9 +11,23 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
+    @address = ''
+    @city = ''
+    @province = ''
     @users = User.all
     authorize(@building)
+    unless @building.zipcode.nil?
+      file = RestClient.get("https://viacep.com.br/ws/#{@building.zipcode}/json/")
+      data_hash = JSON.parse(file)
+      @address = data_hash["logradouro"]
+      @city = data_hash["localidade"]
+      @province = data_hash["uf"]
+    end
   end
+
+#  <% @file = RestClient.get('https://viacep.com.br/ws/04547003/json/') %>
+#  <% @data_hash = JSON.parse(@file) %>
+
 
   def edit
   end

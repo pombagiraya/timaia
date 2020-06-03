@@ -6,6 +6,8 @@ class Building < ApplicationRecord
   validates :super_name, presence: true, length: {minimum: 2}
   validates :super_email, presence: true, length: {minimum: 3}
   validates :zipcode, presence: true
+  validates :address, presence: true, length: {minimum: 3}
+  validates :address_number, presence: true
   validates :city, presence: true, length: {minimum: 2}
   validates :province, presence: true, length: { is: 2 }
   validates :country, presence: true, length: {minimum: 2}

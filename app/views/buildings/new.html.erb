@@ -6,7 +6,9 @@
         <%= f.input :building_name %>
         <%= f.input :super_name %>
         <%= f.input :super_email %>
-        <%= f.input :zipcode %>
+        <%= f.input :zipcode, input_html: {onblur: "findzipcode(this);"} %>
+        <%= f.input :address %>
+        <%= f.input :address_number %>
         <%= f.input :city %>
         <%= f.input :province %>
         <%= f.country_select :country, {priority_countries: ["BR"]}, class: 'form-control' %>
