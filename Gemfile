@@ -19,8 +19,8 @@ gem 'pundit'
 gem 'rubyXL'
 gem 'rest-client'
 gem 'json'
-gem 'jquery-rails'
-gem 'jquery_mask_rails'
+gem 'geocoder'
+gem 'turbolinks', '~> 5'
 
 group :development do
   gem 'web-console', '>= 3.3.0'

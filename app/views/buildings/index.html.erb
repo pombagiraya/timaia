@@ -3,6 +3,15 @@
     <div class="col-6 col-md-8">
       <h1 class="mb-3">Buildings</h1>
       <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
+      
+      <div class="card-map">
+        <div id="map"
+          style="width: 100%; height: 300px;"
+          data-markers="<%= @markers.to_json %>"
+          data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+          </div>
+      </div>
+            
       <table class="table table-borderless">
       <thead class="thead-light">
       <tr>
