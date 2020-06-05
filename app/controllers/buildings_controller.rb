@@ -3,7 +3,17 @@ class BuildingsController < ApplicationController
   before_action :skip_authorization, only: [:import, :export]
 
   def index
+    @buildings = Building.geocoded
     @buildings = policy_scope(Building)
+
+    @markers = @buildings.map do |building|
+      {
+        lat: building.latitude,
+        lng: building.longitude,
+        infoWindow: render_to_string(partial: "info_window", locals: { building: building }),
+        image_url: helpers.asset_url("https://image.flaticon.com/icons/svg/194/194177.svg")
+      }
+    end
   end
 
   def show
@@ -11,23 +21,8 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
-    @address = ''
-    @city = ''
-    @province = ''
-    @users = User.all
     authorize(@building)
-    unless @building.zipcode.nil?
-      file = RestClient.get("https://viacep.com.br/ws/#{@building.zipcode}/json/")
-      data_hash = JSON.parse(file)
-      @address = data_hash["logradouro"]
-      @city = data_hash["localidade"]
-      @province = data_hash["uf"]
-    end
   end
-
-#  <% @file = RestClient.get('https://viacep.com.br/ws/04547003/json/') %>
-#  <% @data_hash = JSON.parse(@file) %>
-
 
   def edit
   end
@@ -107,6 +102,6 @@ class BuildingsController < ApplicationController
   end
 
   def building_params
-    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country)
+    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country, :address, :address_number)
   end
 end
