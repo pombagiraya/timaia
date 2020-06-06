@@ -28,10 +28,10 @@ import { initMapbox } from '../plugins/init_mapbox';
 import "../building"
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
-if(window.location.pathname == '/buildings') {
+// if(window.location.pathname == '/buildings') {
   document.addEventListener('turbolinks:load', () => {
     // Call your functions here, e.g:
     // initSelect2();
     initMapbox();
   });
-};
+//}; documentby id = map
