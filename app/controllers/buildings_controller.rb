@@ -5,7 +5,7 @@ class BuildingsController < ApplicationController
   def index
     @buildings = Building.geocoded
     @buildings = policy_scope(Building)
-
+    # debugger
     @markers = @buildings.map do |building|
       {
         lat: building.latitude,

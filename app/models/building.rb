@@ -18,7 +18,7 @@ class Building < ApplicationRecord
   validates :photo, presence: true
 
   def full_address
-    "#{self.address} #{self.address_number}, #{self.zipcode}, #{self.city}/#{self.province}  #{self.country}"
+    "#{self.address} #{self.address_number}, #{self.city}/#{self.province}  #{self.country}"
   end
 
   def unpaid
