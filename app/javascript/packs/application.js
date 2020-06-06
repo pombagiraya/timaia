@@ -25,13 +25,16 @@ require("channels")
 // External imports
 import "bootstrap";
 import { initMapbox } from '../plugins/init_mapbox';
-import "../building"
+import { findZipcode } from '../plugins/find_zipcode';
+import { previewImageOnFileSelect } from '../components/photo_preview';
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
-// if(window.location.pathname == '/buildings') {
-  document.addEventListener('turbolinks:load', () => {
+
+document.addEventListener('turbolinks:load', () => {
     // Call your functions here, e.g:
     // initSelect2();
     initMapbox();
-  });
-//}; documentby id = map
+    findZipcode();
+    previewImageOnFileSelect();
+});
+

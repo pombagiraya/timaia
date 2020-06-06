@@ -2,6 +2,7 @@
   <div class="row justify-content-center">
     <col-4 class="col-md-6">
       <h1 class="mb-3">Edit <%= @building.building_name %></h1>
+      <div><%= cl_image_tag @building.photo.key, height: 100, width: 50, crop: :fill %></div>
       <%= simple_form_for @building do |f| %>
         <%= f.input :building_name %>
         <%= f.input :super_name %>
@@ -12,6 +13,7 @@
         <%= f.input :city %>
         <%= f.input :province %>
         <%= f.country_select :country, {priority_countries: ["BR"]}, class: 'form-control' %>
+        <%= f.input :photo, input_html: { class: 'd-none' }, label_html: { class: 'upload-photo'}, label: 'Upload a photo', as: :file %>
         <%= f.button :submit %>
       <% end %>
     </col-4>

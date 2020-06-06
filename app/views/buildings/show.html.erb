@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-6 class="col-md-8">
+      <div><%= cl_image_tag @building.photo.key, height: 100, width: 70, crop: :fill %></div>
       <h1><%= @building.building_name %></h1>
       <h4><%= @building.user.name %></h4>
       <button type="button" class="btn btn-light"><%= link_to "Edit", edit_building_path(@building) %></button>
