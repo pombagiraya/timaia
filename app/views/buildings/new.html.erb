@@ -12,9 +12,13 @@
         <%= f.input :city %>
         <%= f.input :province %>
         <%= f.country_select :country, {priority_countries: ["BR"]}, class: 'form-control' %>
+        <div id="add-photo" class="pt-8">
+          <%= image_tag "", width: 100, class: "hidden", id: "photo-preview" %>
+          <%= f.input :photo, input_html: { class: 'd-none', id: 'photo-input'}, label_html: { class: 'upload-photo'}, label: 'Upload a photo', as: :file %>
+        </div>
         <%= f.button :submit %>
       <% end %>
     </col-4>
-  </div>
+  </div> 
   <button type="button" class="btn btn-light"><%= link_to 'Back', buildings_path %></button>
 </div>

@@ -11,7 +11,7 @@ class BuildingsController < ApplicationController
         lat: building.latitude,
         lng: building.longitude,
         infoWindow: render_to_string(partial: "info_window", locals: { building: building }),
-        image_url: helpers.asset_url("https://image.flaticon.com/icons/svg/194/194177.svg")
+        image_url: helpers.asset_url("building-ico.png")
       }
     end
   end
@@ -102,6 +102,6 @@ class BuildingsController < ApplicationController
   end
 
   def building_params
-    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country, :address, :address_number)
+    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country, :address, :address_number, :photo)
   end
 end

@@ -3,6 +3,7 @@ class Building < ApplicationRecord
   has_many :apartments, dependent: :destroy
   geocoded_by :full_address
   after_validation :geocode, if: :will_save_change_to_address?
+  has_one_attached :photo
 
   validates :building_name, presence: true, length: {minimum: 2}
   validates :super_name, presence: true, length: {minimum: 2}
@@ -14,9 +15,10 @@ class Building < ApplicationRecord
   validates :province, presence: true, length: { is: 2 }
   validates :country, presence: true, length: {minimum: 2}
   validates :user_id, presence: true
+  validates :photo, presence: true
 
   def full_address
-    "#{self.address} #{self.address_number}, #{self.city}/#{self.province} #{self.zipcode}"
+    "#{self.address} #{self.address_number}, #{self.zipcode}, #{self.city}/#{self.province}  #{self.country}"
   end
 
   def unpaid
