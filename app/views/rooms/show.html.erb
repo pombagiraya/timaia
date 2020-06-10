@@ -3,9 +3,10 @@
     <col-6 class="col-md-8">
       <h1><%= @room.name %> at <%= @room.building.building_name %></h1>
       <h4>Price: R$<%= @room.price %></h4>
-      <button type="button" class="btn btn-light"><%= link_to "Edit", edit_room_path(@room) %></button>
-      <button type="button" class="btn btn-light"><%= link_to "Delete", room_path(@room), method: :delete, data: {confirm: "Are you sure?"} %></button>
-
+      <% if policy(@room).edit? %>
+        <button type="button" class="btn btn-light"><%= link_to "Edit", edit_room_path(@room) %></button>
+        <button type="button" class="btn btn-light"><%= link_to "Delete", room_path(@room), method: :delete, data: {confirm: "Are you sure?"} %></button>
+      <% end %>
       <h3>Schedules</h3>
       <button type="button" class="btn btn-light">
         <%= link_to 'New Schedule', new_room_schedule_path(@room) %>
@@ -25,7 +26,7 @@
           <td><%= readable_time(schedule.start_time) %></td>
           <td><%= readable_time(schedule.end_time) %></td>
           <td><%= schedule.user.name %></td>
-          <td><% if policy(schedule).edit? %>
+          <td><% if policy(schedule) %>
             <button type="button" class="btn btn-light"><%= link_to "Edit", edit_schedule_path(schedule) %></button>
             <button type="button" class="btn btn-light"><%= link_to "Delete", schedule_path(schedule), method: :delete, data: {confirm: "Are you sure?"} %></button>       
           <% end %></td>
@@ -41,7 +42,7 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-light"><%= link_to 'Back', buildings_path %></button>
+    <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@room.building.id) %></button>
     </col-6>
   </div>
 </div>

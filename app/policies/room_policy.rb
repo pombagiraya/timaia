@@ -30,7 +30,13 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def edit?
-    is_manager_or_admin?
+    def resolve
+      if user.role == 1 || user.role == 2
+        scope.all
+      else
+        scope.where(user: user)
+      end
+    end
   end
 
   def show?
