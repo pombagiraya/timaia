@@ -55,6 +55,33 @@
       <% end %>
     </tbody>
     </table>
+
+    <h3>Rooms</h3>
+    <button type="button" class="btn btn-light">
+      <%= link_to 'New Room', new_building_room_path(@building) %>
+    </button>
+    <table class="table table-borderless">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">Room</th>
+      <th scope="col">Price</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @building.rooms.each do |room| %>
+        <tr>
+          <th><%= link_to room.name, room_path(room) %></th>
+          <td><%= room.price %></td>
+          <td>
+            <button type="button" class="btn btn-light"><%= link_to "Edit", edit_room_path(room) %></button>
+            <button type="button" class="btn btn-light"><%= link_to "Delete", room_path(room), method: :delete, data: {confirm: "Are you sure?"} %></button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    </table>
+
     <button type="button" class="btn btn-light"><%= link_to 'Back', buildings_path %></button>
     </col-6>
   </div>

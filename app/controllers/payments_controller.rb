@@ -27,10 +27,10 @@ class PaymentsController < ApplicationController
       authorize(@payment)
       if @payment.save
         redirect_to apartment_path(params[:apartment_id])
+        flash[:notice] = "Payment created."
       else
         render :new
       end
-      flash[:notice] = "Payment created."
     end
   
     def destroy
@@ -43,10 +43,10 @@ class PaymentsController < ApplicationController
       @payment.update(payment_params)
       if @payment.save
         redirect_to apartment_path(@payment.apartment_id)
+        flash[:notice] = "Payment updated."
       else
         render :edit
-      end
-      flash[:notice] = "Payment updated."
+      end      
     end
   
     private

@@ -1,6 +1,7 @@
 class Building < ApplicationRecord
   belongs_to :user
   has_many :apartments, dependent: :destroy
+  has_many :rooms, dependent: :destroy
   geocoded_by :full_address
   after_validation :geocode, if: :will_save_change_to_address?
   has_one_attached :photo

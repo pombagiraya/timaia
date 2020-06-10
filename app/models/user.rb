@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :buildings
   has_many :apartments
+  has_many :schedules
 end
