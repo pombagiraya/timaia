@@ -3,13 +3,14 @@
     <col-4 class="col-md-6">
       <h1>New Schedule of room <%= @room.name %></h1>
       <%= simple_form_for [ @room, @schedule ] do |f| %>
-        <%= f.input :start_time %>
-        <%= f.input :end_time %>
+        <%= f.input :start_time, :minute_step => 30 %>
+        <%= f.input :end_time, :minute_step => 30  %>
         <% if policy(@building).edit? %>
           <%= f.input :user_id, collection: @users %>
         <% end %>
+        <%#= render "payment_form" %>
         <%= f.button :submit %>
-      <% end %>
+      <% end %> 
     </col-4>
   </div>
   <button type="button" class="btn btn-light"><%= link_to 'Back', room_path(@room.id) %></button>

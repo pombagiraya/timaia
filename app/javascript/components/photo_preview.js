@@ -1,4 +1,4 @@
-const previewImageOnFileSelect = () => {
+  const previewImageOnFileSelect = () => {
     // we select the photo input
     const input = document.getElementById('photo-input');
     if (input) {
