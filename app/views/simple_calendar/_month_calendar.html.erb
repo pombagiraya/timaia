@@ -1,11 +1,13 @@
 <div class="simple-calendar">
-  <div class="calendar-heading flex flex-wrap justify-between items-center">
-    <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "btn btn-default my-2", id: "previous-month" %>
-    <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "btn btn-default my-2", id: "next-month" %>
+  <div class="d-flex justify-content-center align-content-center">
+    <div class="calendar-heading d-flex flex-wrap justify-content-between align-items-center" style="width: 50%;">
+      <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "btn btn-default my-2", id: "previous-month" %>
+      <span class="calendar-title"><strong><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></strong></span>
+      <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "btn btn-default my-2", id: "next-month" %>
+    </div>
   </div>
 
-  <table class="table table-striped">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
