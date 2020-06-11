@@ -24,7 +24,7 @@
   <% if policy(@apartment).admin_view? %>
     <h3>Payments</h3>
     <button type="button" class="btn btn-light">
-      <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
+      <%= link_to 'New Payment', "#" %>
     </button>
   <% else %>
     <h2>Your payments:</h2>
@@ -46,13 +46,12 @@
         <td><%= payment.paid %></td>
         <td>
           <% if policy(@apartment).edit? %>
-            <%= link_to 'Edit', edit_dog_path(@dog) %>
-          <% end %>
-          <% if policy(Apartment).new? %>
-            <button type="button" class="btn btn-dark"><%= link_to 'New Dog', new_dog_path %></button>
+            <%= link_to 'Edit', edit_apartment_path(@apartment) %>
           <% end %>
           <% if policy(@apartment).pay? %>
-            <button type="button" class="btn btn-light"><%= link_to "Pay", "#" %></button>
+            <%= form_tag orders_path %>
+            <%= hidden_field_tag 'apartment_id', @apartment.id %>
+            <%= submit_tag 'Pay', class: 'btn btn-primary' %>
           <% end %>
         </th>
       </td>

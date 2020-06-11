@@ -48,6 +48,10 @@ class ApartmentPolicy < ApplicationPolicy
   def owner_view?
     is_owner?
   end
+
+  def pay?
+    true
+  end
   
   private
 

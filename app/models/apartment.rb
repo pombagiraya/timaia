@@ -2,6 +2,9 @@ class Apartment < ApplicationRecord
   belongs_to :building
   belongs_to :user
   has_many :payments, dependent: :destroy
+  has_many :orders
+  
+  monetize :bill_cents
 
   validates :apt_number, presence: true
   validates :bill, presence: true
