@@ -201,6 +201,8 @@ GEM
       sprockets-rails
       tilt
     semantic_range (2.3.0)
+    simple_calendar (2.4.0)
+      rails (>= 3.0)
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -218,9 +220,12 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.22.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    trix (0.10.1)
+      rails
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -274,9 +279,12 @@ DEPENDENCIES
   rest-client
   rubyXL
   sassc-rails
+  simple_calendar
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
+  stripe
+  trix
   turbolinks (~> 5)
   uglifier
   web-console (>= 3.3.0)

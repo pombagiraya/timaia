@@ -1,9 +1,9 @@
-class BuildingPolicy < ApplicationPolicy
+class RoomPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.role == 2
+      if user.role == 1 || user.role == 2
         scope.all
-      else user.role == 1
+      else
         scope.where(user: user)
       end
     end
@@ -30,24 +30,23 @@ class BuildingPolicy < ApplicationPolicy
   end
 
   def edit?
-    is_manager_or_admin?
+    def resolve
+      if user.role == 1 || user.role == 2
+        scope.all
+      else
+        scope.where(user: user)
+      end
+    end
   end
 
   def show?
     true
   end
-
-  def import?
-    is_manager_or_admin
-  end
-
+  
   private
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
   end
 
-  def no_access
-    page_error_path
-  end
 end

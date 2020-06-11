@@ -1,16 +1,16 @@
-class BuildingPolicy < ApplicationPolicy
+class SchedulePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.role == 2
+      if user.role == 1 || user.role == 2
         scope.all
-      else user.role == 1
+      else
         scope.where(user: user)
       end
     end
   end
 
   def index?
-    is_manager_or_admin?
+    true
   end
 
   def new?
@@ -37,17 +37,25 @@ class BuildingPolicy < ApplicationPolicy
     true
   end
 
-  def import?
-    is_manager_or_admin
+  def admin_view?
+    is_manager_or_admin?
   end
 
+  def owner_view?
+    is_owner?
+  end
+
+  def user_schedules?
+    true
+  end
+  
   private
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
   end
 
-  def no_access
-    page_error_path
+  def is_owner?
+    user.role == 0
   end
 end

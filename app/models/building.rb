@@ -1,6 +1,7 @@
 class Building < ApplicationRecord
   belongs_to :user
   has_many :apartments, dependent: :destroy
+  has_many :rooms, dependent: :destroy
   geocoded_by :full_address
   after_validation :geocode, if: :will_save_change_to_address?
   has_one_attached :photo
@@ -67,12 +68,12 @@ class Building < ApplicationRecord
     i = 1
     (rowCount -1).times do
       user = User.where(email: worksheet[i][4].value).first
+      user.role = 0
       if user.nil?
         user = User.new
         user.email = worksheet[i][4].value
         user.name = worksheet[i][3].value
         user.password = '123456'
-        user.role = 0
         user.save!
       end
       apartment = Apartment.where(apt_number: worksheet[i][1].value).where(building: Building.where(building_name: worksheet[i][0].value)).first

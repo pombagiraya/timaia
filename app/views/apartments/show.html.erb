@@ -46,14 +46,18 @@
         <td><%= payment.paid %></td>
         <td>
           <% if policy(@apartment).edit? %>
-            <%= link_to 'Edit', edit_apartment_path(@apartment) %>
-          <% end %>
-          
+            <%= link_to 'Edit', edit_payment_path(payment) %>
+            <%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %>
+          <% end %>          
         </td>
       </tr>
     <% end %>
     </table>
-    <button type="button" class="btn btn-light"><%= link_to 'Back', user_apartments_path(current_user) %></button>
+    <% if current_user.role == 0 %>
+      <button type="button" class="btn btn-light"><%= link_to 'Back', user_apartments_path(current_user) %></button>
+    <% else %>
+      <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@building.id) %></button>
+    <% end %>
   </col-6>
   </div>
 </div>

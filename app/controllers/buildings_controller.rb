@@ -5,7 +5,6 @@ class BuildingsController < ApplicationController
   def index
     @buildings = Building.geocoded
     @buildings = policy_scope(Building)
-    # debugger
     @markers = @buildings.map do |building|
       {
         lat: building.latitude,
@@ -31,10 +30,10 @@ class BuildingsController < ApplicationController
     @building.update(building_params)
     if @building.save
       redirect_to buildings_path
+      flash[:notice] = "Building updated."
     else
       render :edit
-    end
-    flash[:notice] = "Building updated."
+    end    
   end
 
   def create
@@ -43,10 +42,10 @@ class BuildingsController < ApplicationController
     @building.user = current_user
     if @building.save
       redirect_to buildings_path
+      flash[:notice] = "Building created."
     else
       render :new
-    end
-    flash[:notice] = "Building created."
+    end    
   end
 
   def destroy

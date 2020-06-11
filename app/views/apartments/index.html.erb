@@ -5,6 +5,7 @@
       <table class="table table-borderless mt-3">
           <thead class="thead-light">
           <tr>
+            <th scope="col"></th>
             <th scope="col">Building</th>
             <th scope="col">Apartment</th>
             <th scope="col">Owner</th>
@@ -17,7 +18,8 @@
         <tbody>
           <% @apartments.each do |apartment|%>
             <tr>
-              <td><%= apartment.building.building_name %></td>
+              <td><%= cl_image_tag apartment.building.photo.key, height: 100, width: 70, crop: :fill %></td>
+              <td><%= link_to apartment.building.building_name, building_path(apartment.building) %></td>
               <td><%= apartment.apt_number %></td>
               <td><%= apartment.user.name %></td>
               <td><%= apartment.bill%></td>

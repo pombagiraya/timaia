@@ -1,0 +1,31 @@
+.simple-calendar {
+  .prev-month,
+  .next-month {
+    background: #efefef;
+  }
+}
+
+.simple-calendar td { height: 100px; width: 14.28%; }
+
+.schedule {
+  background-color: $spink-dark;
+  text-align: center;
+  border-radius: $border-radius;
+}
+
+.schedule:hover {
+  background-color: $sred;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.nav-item a.active {
+  font-weight: bold;
+}
+

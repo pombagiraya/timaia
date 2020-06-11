@@ -27,6 +27,7 @@ import "bootstrap";
 import { initMapbox } from '../plugins/init_mapbox';
 import { findZipcode } from '../plugins/find_zipcode';
 import { previewImageOnFileSelect } from '../components/photo_preview';
+import { initSchedules } from "../components/schedules";
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
 
@@ -36,5 +37,6 @@ document.addEventListener('turbolinks:load', () => {
     initMapbox();
     findZipcode();
     previewImageOnFileSelect();
+    initSchedules();
 });
 
