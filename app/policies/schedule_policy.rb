@@ -14,23 +14,23 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def new?
-    is_manager_or_admin?
+    true
   end
 
   def create?
-    is_manager_or_admin?
+    true
   end
 
   def update?
-    is_manager_or_admin?
+    is_manager_or_admin_owner?
   end
 
   def destroy?
-    is_manager_or_admin?
+    is_manager_or_admin_owner?
   end
 
   def edit?
-    is_manager_or_admin?
+    is_manager_or_admin_owner?
   end
 
   def show?
@@ -53,6 +53,10 @@ class SchedulePolicy < ApplicationPolicy
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
+  end
+
+  def is_manager_or_admin_owner?
+    user.role == 1 || user.role == 2 || record.user == user
   end
 
   def is_owner?

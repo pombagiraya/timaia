@@ -78,6 +78,7 @@ GEM
       countries (~> 3.0)
       sort_alphabetical (~> 1.0)
     crass (1.0.6)
+    date_validation (0.0.1)
     devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -262,6 +263,7 @@ DEPENDENCIES
   bootsnap
   cloudinary (~> 1.12.0)
   country_select
+  date_validation
   devise
   dotenv-rails
   font-awesome-sass (~> 5.12.0)

@@ -2,7 +2,7 @@
     <%= date %>
     <% schedules.each do |schedule| %>
       <div class="flew-grow schedule">
-        <%= link_to schedule.user.name, schedule, class: "link" %>
+        <%= link_to schedule.user.apartments.find_by(building_id: schedule.room.building_id).apt_number, schedule, class: "link" %>
       </div>
     <% end %>
   <% end %>

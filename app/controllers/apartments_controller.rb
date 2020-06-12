@@ -28,6 +28,7 @@ class ApartmentsController < ApplicationController
       redirect_to building_path(@apartment.building_id)
       flash[:notice] = "Apartment created."
     else
+      @users = User.all
       render :new
     end    
   end
@@ -49,6 +50,7 @@ class ApartmentsController < ApplicationController
       redirect_to building_path(@apartment.building_id)
       flash[:notice] = "Apartment updated."
     else
+      @users = User.all
       render :edit
     end    
   end 

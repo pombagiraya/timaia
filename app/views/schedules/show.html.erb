@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-6 class="col-md-8">
-      <h1><%= @schedule.room.name %> from <%= @schedule.user.name %></h1>
+      <h1><%= @schedule.room.name %></h1>
+      <p>Booked by: <%= @schedule.user.name %> from apto <%= @schedule.user.apartments.find_by(building_id: @schedule.room.building_id).apt_number %></p>
       <p>Price: R$<%= @schedule.room.price %></p>
       <p>Start time: <%= readable_time(@schedule.start_time) %></p>
       <p>End time: <%= readable_time(@schedule.end_time) %></p>
