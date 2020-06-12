@@ -10,7 +10,7 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def new?
-    is_manager_or_admin?
+    true
   end
 
   def create?

@@ -17,6 +17,9 @@ gem 'uglifier'
 gem 'webpacker'
 gem 'pundit'
 gem 'rubyXL'
+
+gem 'money-rails'
+gem 'stripe'
 gem 'rest-client'
 gem 'json'
 gem 'geocoder'
@@ -27,6 +30,7 @@ gem 'simple_calendar'
 gem 'trix'
 gem 'stripe'
 gem 'redis'
+
 
 group :development do
   gem 'web-console', '>= 3.3.0'

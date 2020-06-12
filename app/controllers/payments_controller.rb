@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
     before_action :find_payment, only: [:destroy, :edit, :update, :show]
-    before_action :find_apartment, only: [:new, :create, :index, :show]
+    before_action :find_apartment, only: [:create, :index, :show]
 
     def index
       @payments = policy_scope(Payment)
@@ -11,8 +11,8 @@ class PaymentsController < ApplicationController
     end
   
     def new
-      @payment = Payment.new
-      authorize(@payment)
+      @order = current_user.orders.where(state: 'pending').find(params[:order_id])
+      authorize(@order)
     end
   
     def edit
@@ -47,6 +47,10 @@ class PaymentsController < ApplicationController
       else
         render :edit
       end      
+    end
+
+    def new_order
+      raise
     end
   
     private

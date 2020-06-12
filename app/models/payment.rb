@@ -1,5 +1,6 @@
 class Payment < ApplicationRecord
   belongs_to :apartment
+  has_many :orders
 
   validates :payment_date, presence: true
   validates :status, presence: true

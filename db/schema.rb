@@ -10,6 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
+#ActiveRecord::Schema.define(version: 2020_06_04_230553) do
 ActiveRecord::Schema.define(version: 2020_06_10_000334) do
 
   # These are extensions that must be enabled in order to support this database
@@ -38,7 +40,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_000334) do
 
   create_table "apartments", force: :cascade do |t|
     t.integer "apt_number"
-    t.decimal "bill", precision: 8, scale: 2
+    t.integer "bill_cents", default: 0, null: false
+    t.string "bill_currency", default: "BRL", null: false
     t.bigint "building_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -63,6 +66,18 @@ ActiveRecord::Schema.define(version: 2020_06_10_000334) do
     t.string "address"
     t.string "address_number"
     t.index ["user_id"], name: "index_buildings_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "state"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "checkout_session_id"
+    t.bigint "user_id"
+    t.bigint "apartment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["apartment_id"], name: "index_orders_on_apartment_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -112,6 +127,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_000334) do
   add_foreign_key "apartments", "buildings"
   add_foreign_key "apartments", "users"
   add_foreign_key "buildings", "users"
+  add_foreign_key "orders", "apartments"
+  add_foreign_key "orders", "users"
   add_foreign_key "payments", "apartments"
   add_foreign_key "rooms", "buildings"
   add_foreign_key "schedules", "rooms"

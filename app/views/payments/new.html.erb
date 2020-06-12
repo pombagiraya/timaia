@@ -1,12 +1,21 @@
 <div class="container">
-  <div class="row justify-content-center">
-    <col-4 class="col-md-6">
-      <h1>New Payment of apto <%= @apartment.apt_number %></h1>
-      <%= simple_form_for [ @apartment, @payment ] do |f| %>
-        <%= f.input :payment_date %>
-        <%= f.button :submit %>
-      <% end %>
-    </col-4>
+  <div class="row py-4">
+    <div class="col">
+      <h1>Checkout summary</h1>
+      <p>Bill of Apto <strong><%= @order.apartment.apt_number %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>
+      <button id="pay" class="btn btn-primary">Pay</button>
+      <script src="https://js.stripe.com/v3/"></script>
+      <script>
+        const paymentButton = document.getElementById('pay');
+        paymentButton.addEventListener('click', () => {
+          const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+          stripe.redirectToCheckout({
+            sessionId: '<%= @order.checkout_session_id %>'
+          });
+        });
+      </script>
+    </div>
   </div>
   <button type="button" class="btn btn-light"><%= link_to 'Back', apartment_path(@apartment.id) %></button>
 </div>
+

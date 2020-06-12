@@ -17,13 +17,19 @@ Rails.application.routes.draw do
     resources :rooms
   end
   resources :apartments, only: [ :show, :edit, :update, :destroy ] do
-    resources :payments, only: [ :index, :new, :create ]
+    resources :orders, only: [ :index, :create ]
   end
+
+  resources :orders, only: [:show, :create] do
+    resources :payments
+  end
+  
   resources :payments, only: [ :show, :edit, :update, :destroy ]
   resources :rooms, only: [ :show, :edit, :update, :destroy ] do
     resources :schedules, only: [ :index, :new, :create ]
   end
   resources :schedules, only: [ :show, :edit, :update, :destroy ]
+
 end
 
 

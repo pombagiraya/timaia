@@ -24,7 +24,7 @@
   <% if policy(@apartment).admin_view? %>
     <h3>Payments</h3>
     <button type="button" class="btn btn-light">
-      <%= link_to 'New Payment', new_apartment_payment_path(@apartment) %>
+      <%= link_to 'New Payment', "#" %>
     </button>
   <% else %>
     <h2>Your payments:</h2>
@@ -46,11 +46,16 @@
         <td><%= payment.paid %></td>
         <td>
           <% if policy(@apartment).edit? %>
-            <%= link_to 'Edit', edit_payment_path(payment) %>
+            <%= link_to 'Edit', edit_apartment_path(@apartment) %>
             <%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %>
-          <% end %>          
-        </td>
-      </tr>
+          <% end %>
+          <% if policy(@apartment).pay? %>
+            <%= form_tag orders_path %>
+            <%= hidden_field_tag 'apartment_id', @apartment.id %>
+            <%= submit_tag 'Pay', class: 'btn btn-primary' %>
+          <% end %>
+        </th>
+      </td>
     <% end %>
     </table>
     <% if current_user.role == 0 %>
