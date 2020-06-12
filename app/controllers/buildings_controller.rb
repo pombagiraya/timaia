@@ -3,7 +3,16 @@ class BuildingsController < ApplicationController
   before_action :skip_authorization, only: [:import, :export]
 
   def index
+    @buildings = Building.geocoded
     @buildings = policy_scope(Building)
+    @markers = @buildings.map do |building|
+      {
+        lat: building.latitude,
+        lng: building.longitude,
+        infoWindow: render_to_string(partial: "info_window", locals: { building: building }),
+        image_url: helpers.asset_url("building-ico.png")
+      }
+    end
   end
 
   def show
@@ -11,7 +20,6 @@ class BuildingsController < ApplicationController
 
   def new
     @building = Building.new
-    @users = User.all
     authorize(@building)
   end
 
@@ -22,10 +30,10 @@ class BuildingsController < ApplicationController
     @building.update(building_params)
     if @building.save
       redirect_to buildings_path
+      flash[:notice] = "Building updated."
     else
       render :edit
-    end
-    flash[:notice] = "Building updated."
+    end    
   end
 
   def create
@@ -34,10 +42,10 @@ class BuildingsController < ApplicationController
     @building.user = current_user
     if @building.save
       redirect_to buildings_path
+      flash[:notice] = "Building created."
     else
       render :new
-    end
-    flash[:notice] = "Building created."
+    end    
   end
 
   def destroy
@@ -93,6 +101,6 @@ class BuildingsController < ApplicationController
   end
 
   def building_params
-    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country)
+    params.require(:building).permit(:building_name, :super_name, :super_email, :zipcode, :city, :province, :country, :address, :address_number, :photo)
   end
 end

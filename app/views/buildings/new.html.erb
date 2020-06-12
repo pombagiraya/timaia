@@ -1,18 +1,24 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-4 class="col-md-6">
-      <h1>New building</h1>
+      <h1 class="mb-3">New building</h1>
       <%= simple_form_for @building do |f| %>
         <%= f.input :building_name %>
         <%= f.input :super_name %>
         <%= f.input :super_email %>
         <%= f.input :zipcode %>
+        <%= f.input :address %>
+        <%= f.input :address_number %>
         <%= f.input :city %>
         <%= f.input :province %>
         <%= f.country_select :country, {priority_countries: ["BR"]}, class: 'form-control' %>
+        <div id="add-photo" class="pt-8">
+          <%= image_tag "", width: 100, class: "hidden", id: "photo-preview" %>
+          <%= f.input :photo, input_html: { class: 'd-none', id: 'photo-input'}, label_html: { class: 'upload-photo'}, label: 'Upload a photo', as: :file %>
+        </div>
         <%= f.button :submit %>
       <% end %>
     </col-4>
-  </div>
+  </div> 
   <button type="button" class="btn btn-light"><%= link_to 'Back', buildings_path %></button>
 </div>

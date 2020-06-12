@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-4 class="col-md-6">
-      <h1>Edit apto <%= @apartment.apt_number %></h1>
+      <h1 class="mb-3">Edit apto <%= @apartment.apt_number %></h1>
       <%= simple_form_for @apartment do |f| %>
         <%= f.input :apt_number %>
         <%= f.input :bill %>

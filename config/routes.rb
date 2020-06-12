@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [] do
     resources :apartments, only: [ :index ]
+    resources :schedules, only: [ :index ]
   end
 
   resources :buildings do
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
     get :export, defaults: { format: 'xslx' }
     resources :apartments, only: [ :new, :create, :index ] do
     end
+    resources :rooms
   end
   resources :apartments, only: [ :show, :edit, :update, :destroy ] do
     resources :orders, only: [ :index, :create ]
@@ -21,6 +23,13 @@ Rails.application.routes.draw do
   resources :orders, only: [:show, :create] do
     resources :payments
   end
+  
+  resources :payments, only: [ :show, :edit, :update, :destroy ]
+  resources :rooms, only: [ :show, :edit, :update, :destroy ] do
+    resources :schedules, only: [ :index, :new, :create ]
+  end
+  resources :schedules, only: [ :show, :edit, :update, :destroy ]
+
 end
 
 

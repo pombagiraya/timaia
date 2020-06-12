@@ -1,11 +1,23 @@
-<div class="container">
+<div class="card-map">
+<div id="map"
+  style="width: 100%; height: 300px;"
+  data-markers="<%= @markers.to_json %>"
+  data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
+</div>
+
+<div class="container mt-13">
   <div class="row justify-content-center">
     <div class="col-6 col-md-8">
-      <h1>Buildings</h1>
-      <button type="button" class="btn btn-light"><%= link_to 'Add New Building', new_building_path %></button>
-      <table class="table">
-      <thead>
+      <h1 class="mb-3">Buildings</h1>
+      <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
+      
+
+            
+      <table class="table table-borderless">
+      <thead class="thead-light">
       <tr>
+        <th scope="col"></th>
         <th scope="col">Building</th>
         <th scope="col">Location</th>
         <th scope="col">Default Rate</th>
@@ -15,6 +27,7 @@
       <tbody>
         <% @buildings.each do |building| %>
         <tr>
+          <th><%= cl_image_tag building.photo.key, height: 100, width: 70, crop: :fill %></th>
           <th><%= link_to building.building_name, building_path(building) %></th>
           <td><%= building.city %>/<%= building.province %></td>
           <td><%= building.default_rate %>%</td>

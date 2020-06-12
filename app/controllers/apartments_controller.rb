@@ -26,10 +26,10 @@ class ApartmentsController < ApplicationController
     authorize(@apartment)
     if @apartment.save
       redirect_to building_path(@apartment.building_id)
+      flash[:notice] = "Apartment created."
     else
       render :new
-    end
-    flash[:notice] = "Apartment created."
+    end    
   end
 
   def destroy
@@ -47,10 +47,10 @@ class ApartmentsController < ApplicationController
     @apartment.update(apartment_params)
     if @apartment.save
       redirect_to building_path(@apartment.building_id)
+      flash[:notice] = "Apartment updated."
     else
       render :edit
-    end
-    flash[:notice] = "Apartment updated."
+    end    
   end 
 
   private

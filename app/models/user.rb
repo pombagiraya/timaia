@@ -6,6 +6,10 @@ class User < ApplicationRecord
 
   has_many :buildings
   has_many :apartments
+
   has_many :payments
   has_many :orders
+
+  has_many :schedules
+
 end
