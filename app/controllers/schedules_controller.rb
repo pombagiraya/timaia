@@ -38,9 +38,13 @@ class SchedulesController < ApplicationController
       redirect_to room_path(@room.id)
       flash[:notice] = "Schedule created."
     else
+      @apartments = Apartment.where(building_id: @room.building.id)
+      @users = []
+      @apartments.each do |apartment|
+        @users << apartment.user
+      end
       render :new
-      flash[:notice] = "Não deu"
-    end    
+    end 
   end
 
   def destroy
@@ -55,6 +59,11 @@ class SchedulesController < ApplicationController
       redirect_to room_path(@schedule.room.id)
       flash[:notice] = "Schedule updated."
     else
+      @apartments = Apartment.where(building_id: @schedule.room.building.id)   
+      @users = []
+      @apartments.each do |apartment|
+        @users << apartment.user
+      end
       render :edit
     end    
   end 
