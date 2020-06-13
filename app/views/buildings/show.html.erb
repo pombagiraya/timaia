@@ -1,97 +1,106 @@
 <div class="container">
-  <div class="row justify-content-center">
-    <col-6 class="col-md-8">
-      <div><%= cl_image_tag @building.photo.key, height: 100, width: 70, crop: :fill %></div>
-      <h1><%= @building.building_name %></h1>
-        <h4><%= @building.user.name %></h4>
-        <% if policy(@building).edit? %>
-          <button type="button" class="btn btn-light"><%= link_to "Edit", edit_building_path(@building) %></button>
-          <button type="button" class="btn btn-light"><%= link_to "Delete", building_path(@building), method: :delete, data: {confirm: "Are you sure?"} %></button>
-        <% end %>
+  <div class="row">
+    <div class="col-md-2"><%= cl_image_tag @building.photo.key, class: 'img-fluid' %></div>
+    <div class="col-md-10">
+      <div class="row justify-content-between">
+        <div>
+          <h1><%= @building.building_name %></h1>
+          <p><%= @building.full_address %></p>
+          <p>Super: <%= @building.super_name %> (<%= @building.super_email %>)</p>
+        <div>
+      </div>
         <% if policy(@building).index? %>
-          <p>Total Unpaid: <%= @building.unpaid %></p>
-          <p>Total Unpaid and Overdue: <%= @building.unpaid_delay %></p>
-          <p>Default Rate: <%= @building.default_rate %>%</p>
+        <div class="row justify-content-left mt-3 mb-3">
+          <div class="notification mr-3 ml-3">
+            <div class="notification-content text-center">
+              <p><small>Amount Unpaid</small></p>
+              <p>R$<%= @building.unpaid %></p>
+            </div>
+          </div>
+          <div class="notification">
+            <div class="notification-content text-center">
+              <p><small>Amount Delayed</small></p>
+              <p>R$<%= @building.unpaid_delay %></p>
+            </div>
+          </div>
+          <div class="notification ml-4">
+            <div class="notification-content text-center">
+              <p><small>Default Rate</small></p>
+              <p><%= @building.default_rate %>%</p>
+            </div>
+          </div>
+        </div>
         <% end %>
-      <p><%= @building.city %>/<%= @building.province %></p>
-      <p><%= @building.zipcode %> <%= @building.country %></p>
-      <p><%= @building.super_name %> - <%= @building.super_email %></p>
-
-      <% if policy(@building).edit? %>
-        <p>
-          Download:
-          <%= link_to "Export", building_export_path(@building, format: "xlsx") %>
-        </p>
-
-        <p>
-          Import:
-          <%= form_tag import_buildings_path, multipart: true do %>
-            <%= file_field_tag :file %>
-            <%= submit_tag "Import" %>
-          <% end %>
-        </p>
-      <% end %>
+          <% if policy(@building).edit? %>
+          <div class="row d-inline">
+            <div class="d-inline ml-3 mr-3">
+              <%= form_tag import_buildings_path, class: 'btn btn-light', multipart: true do %>
+                <%= file_field_tag :file %>
+                <%= submit_tag "Upload", class: 'btn btn-light' %>
+              <% end %>
+            </div>
+            <div class="d-inline">
+              <button type="button" class="btn btn-light mr-3"><%= link_to "Download", building_export_path(@building, format: "xlsx") %></button>
+              <button type="button" class="btn btn-light mr-3"><%= link_to "Edit", edit_building_path(@building) %></button>
+              <button type="button" class="btn btn-light mr-3"><%= link_to "Delete", building_path(@building), method: :delete, data: {confirm: "Are you sure?"} %></button>
+            </div>
+          </div>
+        <% end %>
+    </div>
+    </div>
+  </div>
+    <div class="container col-md-8 mt-5">
       <% if policy(@building).index? %>
-        <h3>Apartments</h3>
+        <h3 class="text-center">Apartments</h3>
         <% if policy(@building).edit? %>
-        <button type="button" class="btn btn-light">
+        <div class="text-center"><button type="button" class="btn btn-light">
           <%= link_to 'New Apartment', new_building_apartment_path(@building) %>
-        </button>
+        </button></div>
         <% end %>
-        <table class="table table-borderless">
-      <thead class="thead-light">
-      <tr>
-        <th scope="col">Apto</th>
-        <th scope="col">Owner</th>
-        <th scope="col">Unpaid</th>
-        <th scope="col">Unpaid and Overdue</th>
-        <% if policy(@building).edit? %><th scope="col">Actions</th><% end %>
-      </tr>
-      </thead>
-      <tbody>
-        <% @building.apartments.each do |apartment| %>
-          <tr>
-            <th><%= link_to apartment.apt_number , apartment_path(apartment) %></th>
-            <td><%= apartment.user.name %></td>
-            <td><%= apartment.unpaid %></td>
-            <td><%= apartment.unpaid_delay %></td>
-            <td><% if policy(@building).edit? %>
-              <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(apartment) %></button>
-              <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
-            <td><% end %>
-          </tr>
-        <% end %>
-      </tbody>
-      </table>
-    <% end %>
-
-    <h3>Rooms</h3>
-    <% if policy(@building).edit? %>
-      <button type="button" class="btn btn-light">
-        <%= link_to 'New Room', new_building_room_path(@building) %>
-      </button>
-    <% end %>
-    <table class="table table-borderless">
-    <thead class="thead-light">
-    <tr>
-      <th scope="col">Room</th>
-      <th scope="col">Price</th>
-      <% if policy(@building).edit? %><th scope="col">Actions</th><% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <% @building.rooms.each do |room| %>
-        <tr>
-          <th><%= link_to room.name, room_path(room) %></th>
-          <td><%= room.price %></td>
-          <% if policy(@building).edit? %><td>
-            <button type="button" class="btn btn-light"><%= link_to "Edit", edit_room_path(room) %></button>
-            <button type="button" class="btn btn-light"><%= link_to "Delete", room_path(room), method: :delete, data: {confirm: "Are you sure?"} %></button>
-          </td><% end %>
-        </tr>
+      
+      <% @building.apartments.each do |apartment| %>
+      <div class="notification card-product mt-3">
+        <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/1024px-Missing_avatar.svg.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+        <div class="notification-content">
+          <h5>Apto <%= link_to apartment.apt_number , apartment_path(apartment) %>: <%= apartment.user.name %></h5>
+          <p>Amount Unpaid: R$<%= apartment.unpaid %><p>
+          <p>Amount Delayed: R$<%= apartment.unpaid_delay %></p>
+        </div>
+        
+        <div class="notification-actions">
+          <%= link_to "Detail", apartment_path(apartment), class: 'btn btn-light' %>
+          <% if policy(@building).edit? %>
+          <%= link_to "Edit", edit_apartment_path(apartment), class: 'btn btn-light' %>
+          <%= link_to "Delete", apartment_path(apartment), class: 'btn btn-light', method: :delete, data: {confirm: "Are you sure?"} %>
+          <% end %>
+        </div>
+      </div>
       <% end %>
-    </tbody>
-    </table>
+    <% end %>
+      <h3 class="text-center mt-5">Rooms</h3>
+      <% if policy(@building).edit? %>
+        <div class="text-center"><button type="button" class="btn btn-light">
+          <%= link_to 'New Room', new_building_room_path(@building) %>
+        </button></div>
+      <% end %>
+
+      <% @building.rooms.each do |room| %>
+      <div class="notification card-product mt-3">
+        <div class="notification-content">
+          <h5><%= link_to room.name, room_path(room) %></h5>
+          <p>Price per rental: R$<%= room.price %><p>
+        </div>
+        
+        <div class="notification-actions">
+          <%= link_to "Detail", room_path(room), class: 'btn btn-light' %>
+          <% if policy(@building).edit? %>
+          <%= link_to "Edit", edit_room_path(room), class: 'btn btn-light' %>
+          <%= link_to "Delete", room_path(room), class: 'btn btn-light', method: :delete, data: {confirm: "Are you sure?"} %>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+
     <% if current_user.role == 0 %>
       <button type="button" class="btn btn-light"><%= link_to 'Back', user_apartments_path(current_user) %></button>
     <% else %>
