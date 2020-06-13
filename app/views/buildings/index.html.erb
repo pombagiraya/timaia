@@ -1,44 +1,41 @@
-<div class="card-map">
-<div id="map"
-  style="width: 100%; height: 300px;"
-  data-markers="<%= @markers.to_json %>"
-  data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-  </div>
-</div>
+<div class="container">
+  <h1 class="mb-3 text-center">Buildings</h1>
+  <% if policy(@buildings).edit? %><div class="text-center">
+    <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
+  </div><% end %>          
+  <div class="row">
+    <div class="col-md-8">
+      <% @buildings.each do |building| %>
+      <div class="card-product mt-3">
+      <%= cl_image_tag building.photo.key, crop: :fill %>
+        <div class="card-product-infos w-100">
+          <h2><%= link_to building.building_name, building_path(building) %></h2>
+          <p><%= building.city %>/<%= building.province %></p>            
+            <div class="d-flex justify-content-between notification-line">
+              <div><p>Default Rate: <%= building.default_rate %>%</p></div>
+              <div class="notification-actions">
+                <%= link_to "Detail", building_path(building), class: 'btn btn-light' %>
+                <% if policy(@buildings).edit? %>
+                  <%= link_to "Edit", edit_building_path(building), class: 'btn btn-light' %>
+                  <%= link_to "Delete", building_path(building), class: 'btn btn-light', method: :delete, data: {confirm: "Are you sure?"} %>
+                <% end %>
+              </div>
+            </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
 
-<div class="container mt-13">
-  <div class="row justify-content-center">
-    <div class="col-6 col-md-8">
-      <h1 class="mb-3">Buildings</h1>
-      <% if policy(@buildings).edit? %>
-        <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
-      <% end %>            
-      <table class="table table-borderless">
-      <thead class="thead-light">
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Building</th>
-        <th scope="col">Location</th>
-        <th scope="col">Default Rate</th>
-        <% if policy(@buildings).edit? %><th scope="col">Actions</th><% end %>
-      </tr>
-      </thead>
-      <tbody>
-        <% @buildings.each do |building| %>
-        <tr>
-          <th><%= cl_image_tag building.photo.key, height: 100, width: 70, crop: :fill %></th>
-          <th><%= link_to building.building_name, building_path(building) %></th>
-          <td><%= building.city %>/<%= building.province %></td>
-          <td><%= building.default_rate %>%</td>
-          <% if policy(@buildings).edit? %><td>
-            <%= link_to "Edit", edit_building_path(building) %>
-            <%= link_to "Delete", building_path(building), method: :delete, data: {confirm: "Are you sure?"} %>
-          </td><% end %>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <button type="button" class="btn btn-light"><%= link_to 'Back', root_path %></button>
+    <div class="col-md-4 mt-3 stycky">
+      <div id="map"
+        style="width: 100%; height: 300px;"
+        data-markers="<%= @markers.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
+ 
+    <button type="button" class="btn btn-light mt-5"><%= link_to 'Back', root_path %></button>
     </div>
   </div>
+</div>
 </div>

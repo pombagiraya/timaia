@@ -34,9 +34,8 @@ class SchedulesController < ApplicationController
     else
       @apartments = Apartment.where(building_id: @room.building_id)
       @users = User.all.where(:id => @apartments.pluck(:user_id))
-      flash[:notice] = "Schedule created - erro."
-      render :new
-    end 
+      render :new   
+    end
   end
 
   def destroy

@@ -1,0 +1,105 @@
+.card-product {
+    overflow: hidden;
+    height: 120px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+  }
+
+.card-map {
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);   
+  }
+  
+  .card-product img {
+    height: 100%;
+    width: 100px;
+    object-fit: cover;
+  }
+
+  .card-product .avatar {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .card-product h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .card-product p {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: .7;
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
+  
+  .card-product .card-product-infos {
+    padding: 16px;
+  }
+
+  .notification {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    background: white;
+    padding: 8px 16px;
+    border: 1px solid rgb(235,235,235);
+  }
+  
+  .notification .notification-content {
+    flex-grow: 1;
+    padding: 0 24px;
+  }
+  
+  .notification p {
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  .notification small {
+    color: #999999;
+    font-weight: bold;
+  }
+
+  .notification .notification-actions {
+    opacity: 0;
+    display: flex;
+    transition: ease .3s;
+  }
+  
+  .notification:hover .notification-actions {
+    opacity: 1;
+  }
+  
+  .notification .notification-actions a {
+    color: #999999;
+    margin-left: 16px;
+    font-size: 14px;
+  }
+  
+  .notification .notification-actions a:hover {
+    color: #555555;
+  }
+
+  .notification-line .notification-actions {
+    opacity: 0;
+    display: flex;
+    transition: ease .3s;
+  }
+  
+  .card-product-infos:hover .notification-actions {
+    opacity: 1;
+  }
+  
+  .notification-line .notification-actions a {
+    color: #999999;
+    margin-left: 16px;
+    font-size: 14px;
+  }
+  
+  .notification-line .notification-actions a:hover {
+    color: #555555;
+  }

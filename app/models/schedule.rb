@@ -15,6 +15,5 @@ class Schedule < ApplicationRecord
     if end_time < start_time
       errors.add(:end_time, "must be after the start date")
     end
- end
-
+  end
 end
