@@ -6,7 +6,7 @@
         <%= f.input :start_time, :minute_step => 30 %>
         <%= f.input :end_time, :minute_step => 30  %>
         <% if policy(@schedule.room.building).edit? %>
-          <%= f.input :user, :collection => @users, :label_method => :name, :value_method => :id, :label => "User", :include_blank => false, selected: @schedule.user_id  %>
+          <%= f.input :user_id, :collection => @users.uniq, :label_method => :name, :value_method => :id, :label => "User", selected: @schedule.user_id %>
         <% end %>
         <%= f.button :submit %>
       <% end %>

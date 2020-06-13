@@ -3,7 +3,7 @@ class ApartmentsController < ApplicationController
   before_action :find_building, only: [:new, :create]
 
   def index
-    @apartments = policy_scope(Apartment)
+    @apartments = policy_scope(Apartment).order(building_id: :asc)
   end
 
   def show
@@ -12,12 +12,12 @@ class ApartmentsController < ApplicationController
 
   def new
     @apartment = Apartment.new
-    @users = User.all
+    @users = User.where(role: '0')
     authorize(@apartment)
   end
 
   def edit
-    @users = User.all
+    @users = User.where(role: '0')
   end
 
   def create
@@ -28,7 +28,7 @@ class ApartmentsController < ApplicationController
       redirect_to building_path(@apartment.building_id)
       flash[:notice] = "Apartment created."
     else
-      @users = User.all
+      @users = User.where(role: '0')
       render :new
     end    
   end
@@ -50,7 +50,7 @@ class ApartmentsController < ApplicationController
       redirect_to building_path(@apartment.building_id)
       flash[:notice] = "Apartment updated."
     else
-      @users = User.all
+      @users = User.where(role: '0')
       render :edit
     end    
   end 

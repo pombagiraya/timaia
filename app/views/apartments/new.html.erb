@@ -5,7 +5,7 @@
       <%= simple_form_for [ @building, @apartment] do |f| %>
         <%= f.input :apt_number %>
         <%= f.input :bill %>
-        <%= f.input :user_id, :collection => @users, :label_method => :name, :value_method => :id, :label => "User", selected: @apartment.user_id  %>
+        <%= f.input :user_id, :collection => @users.uniq, :label_method => :name, :value_method => :id, :label => "User", selected: @apartment.user_id  %>
         <%= f.button :submit %>
       <% end %>
     </col-4>

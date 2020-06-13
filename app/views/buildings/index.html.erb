@@ -10,10 +10,9 @@
   <div class="row justify-content-center">
     <div class="col-6 col-md-8">
       <h1 class="mb-3">Buildings</h1>
-      <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
-      
-
-            
+      <% if policy(@buildings).edit? %>
+        <button type="button" class="btn btn-light mb-3"><%= link_to 'Add New Building', new_building_path %></button>
+      <% end %>            
       <table class="table table-borderless">
       <thead class="thead-light">
       <tr>
@@ -21,7 +20,7 @@
         <th scope="col">Building</th>
         <th scope="col">Location</th>
         <th scope="col">Default Rate</th>
-        <th scope="col">Actions</th>
+        <% if policy(@buildings).edit? %><th scope="col">Actions</th><% end %>
       </tr>
       </thead>
       <tbody>
@@ -31,10 +30,10 @@
           <th><%= link_to building.building_name, building_path(building) %></th>
           <td><%= building.city %>/<%= building.province %></td>
           <td><%= building.default_rate %>%</td>
-          <td>
+          <% if policy(@buildings).edit? %><td>
             <%= link_to "Edit", edit_building_path(building) %>
             <%= link_to "Delete", building_path(building), method: :delete, data: {confirm: "Are you sure?"} %>
-          </td>
+          </td><% end %>
         </tr>
         <% end %>
       </tbody>

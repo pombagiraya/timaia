@@ -21,12 +21,16 @@
               <td><%= cl_image_tag apartment.building.photo.key, height: 100, width: 70, crop: :fill %></td>
               <td><%= link_to apartment.building.building_name, building_path(apartment.building) %></td>
               <td><%= apartment.apt_number %></td>
-              <td><%= apartment.user.name %></td>
-              <td><%= apartment.bill%></td>
+              <td><% unless current_user == apartment.user.name %><%= apartment.user.name %><% end %></td>
+              <td><%= apartment.bill %></td>
               <td><%= apartment.unpaid %></td>
               <td><%= apartment.unpaid_delay %></td>
-              <td><%= link_to "More info", apartment_path(apartment) %></button></td>
-            </th>
+              <td><% if policy(apartment.building).edit? %>
+              <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(apartment) %></button>
+              <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
+              <% end %>
+              <button type="button" class="btn btn-light"><%= link_to "Details", apartment_path(apartment) %></button></td>
+            </tr>
             </td>
           <%end%>
       </table>
