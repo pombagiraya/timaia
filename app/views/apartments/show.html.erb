@@ -35,7 +35,7 @@
       <th scope="col">Date</th>
       <th scope="col">Status</th>
       <th scope="col">Payment</th>
-      <th scope="col">Actions</th>
+      <% if policy(@apartment).edit? %><th scope="col">Actions</th><% end %>
     </tr>
   </thead>
   <tbody>

@@ -1,10 +1,11 @@
+require 'pry'
 class BuildingsController < ApplicationController
   before_action :find_building, only: [:show, :destroy, :edit, :update]
   before_action :skip_authorization, only: [:import, :export]
 
   def index
     @buildings = Building.geocoded
-    @buildings = policy_scope(Building)
+    @buildings = policy_scope(Building).all
     @markers = @buildings.map do |building|
       {
         lat: building.latitude,
@@ -40,6 +41,12 @@ class BuildingsController < ApplicationController
     @building = Building.new(building_params)
     authorize(@building)
     @building.user = current_user
+    usersuper = User.new
+    usersuper.name = @building.super_name
+    usersuper.email = @building.super_email
+    usersuper.password = '123456'
+    usersuper.role = 3
+    usersuper.save!
     if @building.save
       redirect_to buildings_path
       flash[:notice] = "Building created."
