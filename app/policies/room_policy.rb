@@ -10,7 +10,7 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def index?
-    is_manager_or_admin?
+    is_manager_or_admin_or_super?
   end
 
   def new?
@@ -22,15 +22,15 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def update?
-    is_manager_or_admin?
+    is_managerowner_or_admin?
   end
 
   def destroy?
-    is_manager_or_admin?
+    is_managerowner_or_admin?
   end
 
   def edit?
-    is_manager_or_admin?
+    is_managerowner_or_admin?
   end
 
   def show?
@@ -41,6 +41,14 @@ class RoomPolicy < ApplicationPolicy
 
   def is_manager_or_admin?
     user.role == 1 || user.role == 2
+  end
+
+  def is_managerowner_or_admin?
+    user.role == 1 || record.building.user == user
+  end
+
+  def is_manager_or_admin_or_super?
+    user.role == 1 || record.building.user == user || record.building.super_email == user.email
   end
 
 end

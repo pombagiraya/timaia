@@ -1,16 +1,16 @@
 class ApartmentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.role == 1 || user.role == 2
+      if user.role == 1
         scope.all
       else
-        scope.where(user: user)
+        scope.where("user_id = ? OR building_id in (select building_id from buildings where user_id = ? OR super_email = ?)", user, user.id, user.email)
       end
     end
   end
 
   def index?
-    is_manager_or_admin?
+    is_owner?
   end
 
   def new?
@@ -56,7 +56,11 @@ class ApartmentPolicy < ApplicationPolicy
   private
 
   def is_manager_or_admin?
-    user.role == 1 || user.role == 2
+    user.role == 1 || record.building.user == user
+  end
+
+  def is_manager_or_admin_or_super?
+    user.role == 1 || record.building.user == user || record.building.super_email == user.email
   end
 
   def is_owner?

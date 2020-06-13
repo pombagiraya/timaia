@@ -3,7 +3,7 @@ class SchedulesController < ApplicationController
   before_action :find_room, only: [:new, :create]
 
   def index
-    @schedules = policy_scope(Schedule.where(user_id: current_user.id))
+    @schedules = policy_scope(Schedule)
   end
 
   def show
@@ -12,21 +12,14 @@ class SchedulesController < ApplicationController
   def new
     @schedule = Schedule.new
     authorize(@schedule)
-    @building = @room.building
-    @apartments = Apartment.where(building_id: @room.building.id)
-    @users = []
-    @apartments.each do |apartment|
-      @users << apartment.user
-    end
+    @apartments = Apartment.where(building_id: @room.building_id)
+    @users = User.all.where(:id => @apartments.pluck(:user_id))
   end
 
   def edit
-    @apartments = Apartment.where(building_id: @schedule.room.building.id)
+    @apartments = Apartment.where(building_id: @schedule.room.building_id)
     @building = @schedule.room.building
-    @users = []
-    @apartments.each do |apartment|
-      @users << apartment.user
-    end
+    @users = User.all.where(:id => @apartments.pluck(:user_id))
   end
 
   def create
@@ -38,11 +31,9 @@ class SchedulesController < ApplicationController
       redirect_to room_path(@room.id)
       flash[:notice] = "Schedule created."
     else
-      @apartments = Apartment.where(building_id: @room.building.id)
-      @users = []
-      @apartments.each do |apartment|
-        @users << apartment.user
-      end
+      @apartments = Apartment.where(building_id: @room.building_id)
+      @users = User.all.where(:id => @apartments.pluck(:user_id))
+      flash[:notice] = "Schedule created - erro."
       render :new
     end 
   end
@@ -59,11 +50,8 @@ class SchedulesController < ApplicationController
       redirect_to room_path(@schedule.room.id)
       flash[:notice] = "Schedule updated."
     else
-      @apartments = Apartment.where(building_id: @schedule.room.building.id)   
-      @users = []
-      @apartments.each do |apartment|
-        @users << apartment.user
-      end
+      @apartments = Apartment.where(building_id: @schedule.room.building_id)   
+      @users = User.all.where(:id => @apartments.pluck(:user_id))
       render :edit
     end    
   end 
