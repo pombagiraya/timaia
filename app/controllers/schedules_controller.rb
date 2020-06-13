@@ -28,6 +28,7 @@ class SchedulesController < ApplicationController
     @schedule.user = current_user if @schedule.user.nil?
     authorize(@schedule)
     if @schedule.save
+      ScheduleMailer.with(schedule: @schedule, user: current_user).room_scheduled.deliver_now!
       redirect_to room_path(@room.id)
       flash[:notice] = "Schedule created."
     else

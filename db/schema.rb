@@ -10,8 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-#ActiveRecord::Schema.define(version: 2020_06_04_230553) do
 ActiveRecord::Schema.define(version: 2020_06_10_000334) do
 
   # These are extensions that must be enabled in order to support this database
@@ -40,8 +38,7 @@ ActiveRecord::Schema.define(version: 2020_06_10_000334) do
 
   create_table "apartments", force: :cascade do |t|
     t.integer "apt_number"
-    t.integer "bill_cents", default: 0, null: false
-    t.string "bill_currency", default: "BRL", null: false
+    t.decimal "bill", precision: 8, scale: 2
     t.bigint "building_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

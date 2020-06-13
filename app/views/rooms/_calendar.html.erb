@@ -2,7 +2,9 @@
     <%= date %>
     <% schedules.each do |schedule| %>
       <div class="flew-grow schedule">
-        <%= link_to schedule.user.apartments.find_by(building_id: schedule.room.building_id).apt_number, schedule, class: "link" %>
+        <% unless schedule.user.apartments.find_by(building_id: schedule.room.building_id).nil? %>
+          <%= link_to schedule.user.apartments.find_by(building_id: schedule.room.building_id).apt_number, schedule, class: "link" %>
+        <% end %>
       </div>
     <% end %>
   <% end %>
