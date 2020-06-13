@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   def create
     apartment = Apartment.find(params[:apartment_id])
-    order  = Order.create!(apartment: apartment, amount: apartment.bill, state: 'pending', user: current_user )
+    order  = Order.create!(apartment: apartment, amount: apartment.bill_cents, state: 'pending', user: current_user )
     authorize(order)
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],

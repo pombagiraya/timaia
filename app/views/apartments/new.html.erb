@@ -4,7 +4,7 @@
       <h1 class="mb-3">New Apartment at <%= @building.building_name %></h1>
       <%= simple_form_for [ @building, @apartment] do |f| %>
         <%= f.input :apt_number %>
-        <%= f.input :bill %>
+        <%= f.input :bill_cents %>
         <%= f.input :user_id, :collection => @users.uniq, :label_method => :name, :value_method => :id, :label => "User", selected: @apartment.user_id  %>
         <%= f.button :submit %>
       <% end %>

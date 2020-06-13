@@ -38,7 +38,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_000334) do
 
   create_table "apartments", force: :cascade do |t|
     t.integer "apt_number"
-    t.decimal "bill", precision: 8, scale: 2
+    t.integer "bill_cents", default: 0, null: false
+    t.string "bill_currency", default: "BRL", null: false
     t.bigint "building_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

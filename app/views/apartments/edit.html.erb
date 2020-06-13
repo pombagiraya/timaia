@@ -4,7 +4,7 @@
       <h1 class="mb-3">Edit apto <%= @apartment.apt_number %></h1>
       <%= simple_form_for @apartment do |f| %>
         <%= f.input :apt_number %>
-        <%= f.input :bill %>
+        <%= f.input :bill_cents %>
         <%= f.input :user_id, :collection => @users.uniq, :label_method => :name, :value_method => :id, :label => "User", :include_blank => false, selected: @apartment.user_id  %>
         <%= f.button :submit %>
       <% end %>

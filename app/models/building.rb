@@ -27,7 +27,7 @@ class Building < ApplicationRecord
     self.apartments.each do |apartment|
       apartment.payments.each do |payment|
         if payment.status == 0
-          unpaid += apartment.bill
+          unpaid += apartment.bill_cents
         end
       end
     end
@@ -39,7 +39,7 @@ class Building < ApplicationRecord
     self.apartments.each do |apartment|
       apartment.payments.each do |payment|
         if payment.status == 0 && payment.payment_date <= Date.today
-          unpaid_delay += apartment.bill
+          unpaid_delay += apartment.bill_cents
         end
       end
     end
@@ -52,7 +52,7 @@ class Building < ApplicationRecord
       apto_unpaid = 0
       apartment.payments.each do |payment|
         if payment.status == 0
-          apto_unpaid += apartment.bill
+          apto_unpaid += apartment.bill_cents
         end
       end
       default_rate += 1 if apto_unpaid > 0
@@ -80,7 +80,7 @@ class Building < ApplicationRecord
       apartment = Apartment.new if apartment.nil?
       apartment.apt_number = worksheet[i][1].value
       apartment.building_id = Building.where(building_name: worksheet[i][0].value).first.id
-      apartment.bill = worksheet[i][2].value
+      apartment.bill_cents = worksheet[i][2].value
       apartment.user_id = user.id
       apartment.save!
       i += 1

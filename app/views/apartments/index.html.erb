@@ -22,7 +22,7 @@
               <td><%= link_to apartment.building.building_name, building_path(apartment.building) %></td>
               <td><%= apartment.apt_number %></td>
               <td><% unless current_user == apartment.user.name %><%= apartment.user.name %><% end %></td>
-              <td><%= apartment.bill %></td>
+              <td><%= apartment.bill_cents %></td>
               <td><%= apartment.unpaid %></td>
               <td><%= apartment.unpaid_delay %></td>
               <td><% if policy(apartment.building).edit? %>

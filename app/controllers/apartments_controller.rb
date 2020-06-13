@@ -67,7 +67,7 @@ class ApartmentsController < ApplicationController
   end
 
   def apartment_params
-    params.require(:apartment).permit(:apt_number, :bill, :user_id)
+    params.require(:apartment).permit(:apt_number, :bill_cents, :user_id)
   end
 
   def find_apartments(user_id)

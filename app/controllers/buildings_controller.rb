@@ -82,7 +82,7 @@ class BuildingsController < ApplicationController
       @building.apartments.each do |apartment|
         worksheet.add_cell(i, 0, name)
         worksheet.add_cell(i, 1, apartment.apt_number)
-        worksheet.add_cell(i, 2, apartment.bill)
+        worksheet.add_cell(i, 2, apartment.bill_cents)
         worksheet.add_cell(i, 3, apartment.user.name)
         worksheet.add_cell(i, 4, apartment.user.email)
         i += 1

@@ -7,7 +7,7 @@ class Apartment < ApplicationRecord
   # monetize :bill_cents
 
   validates :apt_number, presence: true
-  validates :bill, presence: true
+  validates :bill_cents, presence: true
   validates :building_id, presence: true
   validates :user_id, presence: true
 
@@ -18,7 +18,7 @@ class Apartment < ApplicationRecord
         unpaid += 1
       end
     end
-    unpaid *= self.bill
+    unpaid *= self.bill_cents
     return unpaid
   end
 
@@ -29,7 +29,7 @@ class Apartment < ApplicationRecord
         unpaid_delay += 1
       end
     end
-    unpaid_delay *= self.bill
+    unpaid_delay *= self.bill_cents
     return unpaid_delay
   end
 
