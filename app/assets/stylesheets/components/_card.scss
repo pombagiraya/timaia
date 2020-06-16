@@ -46,7 +46,10 @@
     margin-bottom: 8px;
     background: white;
     padding: 8px 16px;
-    border: 1px solid rgb(235,235,235);
+  }
+
+  .kpi {
+    border: 1px solid rgba($sgreen, 0.7);
   }
   
   .notification .notification-content {
@@ -60,7 +63,7 @@
   }
   
   .notification small {
-    color: #999999;
+    color: $sgreen;
     font-weight: bold;
   }
 

@@ -2,8 +2,20 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  before_action :user_role
+
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :photo])
+    devise_parameter_sanitizer.permit(:account_update, keys:[:name, :avatar])
+  end
+
+  def user_role
+    unless current_user.nil?
+      if current_user.role.nil?
+        current_user.role = 1
+        current_user.save!
+      end
+    end
   end
 
   include Pundit
