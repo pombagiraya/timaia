@@ -8,61 +8,46 @@
         <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
         <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
         <p>Owner: <%= @apartment.user.name %></p>
-        <p>Bill: <%= @apartment.bill %></p>
+        <p>Bill: <%= @apartment.bill_cents %></p>
         <p>Total Unpaid: <%= @apartment.unpaid %></p>
-        <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>
+        <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>>
       <% else %>
         <h2>Apartment Info:</h2>
         <h3>Apto: <%= @apartment.apt_number %></h3>
         <h4>Building: <%=@apartment.building.building_name%></h4>
         <p>Nome: <%= @apartment.user.name %></p>
-        <p>Bill: <%= @apartment.bill %></p>
+        <p>Bill: <%= @apartment.bill_cents %></p>
         <p>Your debit: <%= @apartment.unpaid %></p>
         <p>Debits overdue: <%= @apartment.unpaid_delay %></p>
-      <% end%>
+      <% end% %>
+
+      <%= form_tag orders_path, method: :post %>
+      <%= hidden_field_tag 'apartment_id', @apartment.id %>
+      <%= submit_tag 'Create Payment', class: 'btn btn-primary' %>
+
 
   <% if policy(@apartment).admin_view? %>
     <h3>Payments</h3>
-    <button type="button" class="btn btn-light">
-      <%= link_to 'New Payment', "#" %>
     </button>
-  <% else %>
-    <h2>Your payments:</h2>
-  <% end %>
-  <table class="table table-borderless">
-    <thead class="thead-light">
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Status</th>
-      <th scope="col">Payment</th>
-      <% if policy(@apartment).edit? %><th scope="col">Actions</th><% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @apartment.payments.order(payment_date: :desc).each do |payment| %>
-      <tr>
-        <td><%= payment.payment_date %></td>
-        <td><%= payment.deadline %></td>
-        <td><%= payment.paid %></td>
-        <td>
-          <% if policy(@apartment).edit? %>
-            <%= link_to 'Edit', edit_apartment_path(@apartment) %>
-            <%= link_to "Delete", payment_path(payment), method: :delete, data: {confirm: "Are you sure?"} %>
-          <% end %>
-          <% if policy(@apartment).pay? %>
-            <%= form_tag orders_path %>
-            <%= hidden_field_tag 'apartment_id', @apartment.id %>
-            <%= submit_tag 'Pay', class: 'btn btn-primary' %>
-          <% end %>
-        </th>
-      </td>
-    <% end %>
-    </table>
-    <% if current_user.role == 0 %>
-      <button type="button" class="btn btn-light"><%= link_to 'Back', user_apartments_path(current_user) %></button>
-    <% else %>
-      <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@building.id) %></button>
-    <% end %>
-  </col-6>
-  </div>
-</div>
+    <table class="table table-borderless">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Status.</th>
+          <th scope="col">Value</th>
+          <th scope="col">Actions</th><% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.created_at.to_date %></td>
+            <td><%= order.state.capitalize %></td>
+            <td>R$<%= order.amount %></td>
+            <td><button type="button" class="btn btn-light"><%= link_to "Pay", new_order_payment_path(order, apartment_id: @apartment.id) %></button></td>
+            </th>
+          </td>
+        <% end %>
+        </table>
+        <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@building.id) %></button>
+  

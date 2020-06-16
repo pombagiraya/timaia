@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
     before_action :find_payment, only: [:destroy, :edit, :update, :show]
-    before_action :find_apartment, only: [:create, :index, :show]
+    before_action :find_apartment, only: [ :new, :create, :index, :show]
 
     def index
       @payments = policy_scope(Payment)

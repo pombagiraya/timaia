@@ -50,7 +50,7 @@ class ApartmentPolicy < ApplicationPolicy
   end
 
   def pay?
-    true
+    is_owner?
   end
   
   private
@@ -64,6 +64,6 @@ class ApartmentPolicy < ApplicationPolicy
   end
 
   def is_owner?
-    user.role == 0
+    user.role == 0 || record.user == user 
   end
 end
