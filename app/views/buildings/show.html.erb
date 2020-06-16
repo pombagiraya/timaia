@@ -6,24 +6,24 @@
         <div>
           <h1><%= @building.building_name %></h1>
           <p><%= @building.full_address %></p>
-          <p>Super: <%= @building.super_name %> (<%= @building.super_email %>)</p>
+          <p><strong>Super: </strong><%= @building.super_name %> (<%= @building.super_email %>)</p>
         <div>
       </div>
         <% if policy(@building).index? %>
         <div class="row justify-content-left mt-3 mb-3">
-          <div class="notification mr-3 ml-3">
+          <div class="notification kpi mr-3 ml-3">
             <div class="notification-content text-center">
               <p><small>Amount Unpaid</small></p>
               <p>R$<%= @building.unpaid %></p>
             </div>
           </div>
-          <div class="notification">
+          <div class="notification kpi">
             <div class="notification-content text-center">
               <p><small>Amount Delayed</small></p>
               <p>R$<%= @building.unpaid_delay %></p>
             </div>
           </div>
-          <div class="notification ml-4">
+          <div class="notification kpi ml-4">
             <div class="notification-content text-center">
               <p><small>Default Rate</small></p>
               <p><%= @building.default_rate %>%</p>
@@ -41,6 +41,8 @@
             </div>
             <div class="d-inline">
               <button type="button" class="btn btn-light mr-3"><%= link_to "Download", building_export_path(@building, format: "xlsx") %></button>
+            </div>
+            <div>
               <button type="button" class="btn btn-light mr-3"><%= link_to "Edit", edit_building_path(@building) %></button>
               <button type="button" class="btn btn-light mr-3"><%= link_to "Delete", building_path(@building), method: :delete, data: {confirm: "Are you sure?"} %></button>
             </div>
@@ -58,24 +60,25 @@
         </button></div>
         <% end %>
       
-      <% @building.apartments.each do |apartment| %>
-      <div class="notification card-product mt-3">
-        <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/1024px-Missing_avatar.svg.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-        <div class="notification-content">
-          <h5>Apto <%= link_to apartment.apt_number , apartment_path(apartment) %>: <%= apartment.user.name %></h5>
-          <p>Amount Unpaid: R$<%= apartment.unpaid %><p>
-          <p>Amount Delayed: R$<%= apartment.unpaid_delay %></p>
+        <% @building.apartments.each do |apartment| %>
+        <div class="notification card-product mt-3">
+          <%= image_tag "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/1024px-Missing_avatar.svg.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+          <div class="notification-content">
+            <h5>Apto <%= link_to apartment.apt_number , apartment_path(apartment) %>: <%= apartment.user.name %></h5>
+            <p>Amount Unpaid: R$<%= apartment.unpaid %><p>
+            <p>Amount Delayed: R$<%= apartment.unpaid_delay %></p>
+          </div>
+          
+          <div class="notification-actions">
+            <%= link_to "Detail", apartment_path(apartment), class: 'btn btn-light' %>
+            <% if policy(@building).edit? %>
+            <%= link_to "Edit", edit_apartment_path(apartment), class: 'btn btn-light' %>
+            <%= link_to "Delete", apartment_path(apartment), class: 'btn btn-light', method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
+          </div>
         </div>
-        
-        <div class="notification-actions">
-          <%= link_to "Detail", apartment_path(apartment), class: 'btn btn-light' %>
-          <% if policy(@building).edit? %>
-          <%= link_to "Edit", edit_apartment_path(apartment), class: 'btn btn-light' %>
-          <%= link_to "Delete", apartment_path(apartment), class: 'btn btn-light', method: :delete, data: {confirm: "Are you sure?"} %>
-          <% end %>
-        </div>
-      </div>
-      <% end %>
+        <% end %>
+
     <% end %>
       <h3 class="text-center mt-5">Rooms</h3>
       <% if policy(@building).edit? %>

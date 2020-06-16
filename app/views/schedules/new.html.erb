@@ -8,7 +8,6 @@
         <% if policy(@room.building).index? %>
           <%= f.input :user_id, :collection => @users.uniq, :label_method => :name, :value_method => :id, :label => "User", selected: @schedule.user_id %>
         <% end %>
-        <%#= render "payment_form" %>
         <%= f.button :submit %>
       <% end %> 
     </col-6>

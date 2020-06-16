@@ -11,5 +11,6 @@ class User < ApplicationRecord
   has_many :orders
 
   has_many :schedules
+  has_one_attached :photo
 
 end
