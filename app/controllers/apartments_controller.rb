@@ -8,6 +8,7 @@ class ApartmentsController < ApplicationController
 
   def show
     @building = Building.find(@apartment.building.id)
+    @orders = Order.where(apartment: @apartment)
   end
 
   def new
@@ -54,6 +55,11 @@ class ApartmentsController < ApplicationController
       render :edit
     end    
   end 
+
+  def unpaid
+    orders = Order.where(apartment: @apartment)
+    @unpaid = orders.where(state: 'pending')
+  end
 
   private
 
