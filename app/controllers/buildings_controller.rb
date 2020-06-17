@@ -1,4 +1,3 @@
-require 'pry'
 class BuildingsController < ApplicationController
   before_action :find_building, only: [:show, :destroy, :edit, :update]
   before_action :skip_authorization, only: [:import, :export]
