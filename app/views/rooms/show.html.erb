@@ -1,18 +1,20 @@
 <div class="container">
   <div class="row justify-content-center">
-    <col-6 class="col-md-8">
-      <h1><%= @room.name %> at <%= @room.building.building_name %></h1>
-      <h4>Price: R$<%= @room.price %></h4>
+    <col-6 class="col-md-10">
+      <h1><%= @room.name %></h1>
+      <p><strong>Building:</strong> <%= @room.building.building_name %></p>
+      <p><strong>Price:</strong> R$<%= @room.price %></p>
       <% if policy(@room).edit? %>
         <button type="button" class="btn btn-light"><%= link_to "Edit", edit_room_path(@room) %></button>
         <button type="button" class="btn btn-light"><%= link_to "Delete", room_path(@room), method: :delete, data: {confirm: "Are you sure?"} %></button>
       <% end %>
-      <h3>Schedules</h3>
-      <button type="button" class="btn btn-light">
+      
+      <h3 class="text-center">Schedules</h3>
+      <div class="text-center"><button type="button" class="btn btn-light">
         <%= link_to 'New Schedule', new_room_schedule_path(@room) %>
-      </button>   
+      </button></div>
 
-      <div class="bg-white mb-4 shadow rounded mt-4">
+      <div class="bg-white mb-4 shadow rounded mt-4 pb-2">
         <ul id="nav-tab" class="nav nav-tabs">
 
           <li class="nav-item active">
