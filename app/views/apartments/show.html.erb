@@ -1,43 +1,39 @@
 <div class="container">
   <div class="row justify-content-center">
-    <col-6 class="col-md-8">
-      <% if policy(@apartment).admin_view? %>
-        <h2>Apartment Info</h2>
-        <h4>Building: <%= @apartment.building.building_name %></h4>
-        <h4>Apto: <%= @apartment.apt_number %></h4>
+    <col-6 class="col-md-10">
+    <h1>Apartment <%= @apartment.apt_number %></h1>
+    <p><strong>Building: </strong><%= @apartment.building.building_name %></p>
+      <% if policy(@apartment).admin_view? %>       
+        <p><strong>Owner: </strong><%= @apartment.user.name %></p>
+        <p><strong>Bill: </strong>  <%= @apartment.bill_cents %></p>
+        <p><strong>Total Unpaid: </strong>R$<%= @apartment.unpaid %></p>
+        <p><strong>Total Unpaid and Overdue: </strong>R$<%= @apartment.unpaid_delay %></p>
         <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
         <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
-        <p>Owner: <%= @apartment.user.name %></p>
-        <p>Bill: <%= @apartment.bill_cents %></p>
-        <p>Total Unpaid: <%= @apartment.unpaid %></p>
-        <p>Total Unpaid and Overdue: <%= @apartment.unpaid_delay %></p>>
       <% else %>
-        <h2>Apartment Info:</h2>
-        <h3>Apto: <%= @apartment.apt_number %></h3>
-        <h4>Building: <%=@apartment.building.building_name%></h4>
-        <p>Nome: <%= @apartment.user.name %></p>
-        <p>Bill: <%= @apartment.bill_cents %></p>
-        <p>Your debit: <%= @apartment.unpaid %></p>
-        <p>Debits overdue: <%= @apartment.unpaid_delay %></p>
+        <p><strong>Bill: </strong>R$<%= @apartment.bill_cents %></p>
+        <p><strong>Your debit: </strong>R$<%= @apartment.unpaid %></p>
+        <p><strong>Debits overdue: </strong>R$<%= @apartment.unpaid_delay %></p>
       <% end% %>
 
-      <%= form_tag orders_path, method: :post %>
-      <%= hidden_field_tag 'apartment_id', @apartment.id %>
-      <%= submit_tag 'Create Payment', class: 'btn btn-primary' %>
+      <div class="card-schedule mt-5 mb-3">
+      <h3 class="text-center">Payments</h3>
+      <div class="text-center mb-2">
+        <%= form_tag orders_path, method: :post %>
+        <%= hidden_field_tag 'apartment_id', @apartment.id %>
+        <%= submit_tag 'Create Payment', class: 'btn btn-light' %>
+      </div>
 
-
-  <% if policy(@apartment).admin_view? %>
-    <h3>Payments</h3>
-    </button>
+  <% if policy(@apartment).admin_view? %>    
     <table class="table table-borderless">
         <thead class="thead-light">
         <tr>
           <th scope="col">Date</th>
           <th scope="col">Status.</th>
           <th scope="col">Value</th>
-          <th scope="col">Actions</th><% end %>
+          <th scope="col">Actions</th>
         </tr>
-      </thead>
+      </thead><% end %>
       <tbody>
         <% @orders.each do |order| %>
           <tr>
@@ -47,8 +43,9 @@
             <td><button type="button" class="btn btn-light"><%= link_to "Pay", new_order_payment_path(order, apartment_id: @apartment.id) %></button></td>
             </th>
           </td>
-        <% end %>
       </table>
+      <% end %>
+      </div>
     <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@building.id) %></button>
   </div>
 </div> 

@@ -1,20 +1,21 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-6 class="col-md-8">
+    <div class="card-schedule mt-3">
       <h1><%= @schedule.room.name %></h1>
-      <p>Booked by: <%= @schedule.user.name %> from apto <%= @schedule.user.apartments.find_by(building_id: @schedule.room.building_id).apt_number %></p>
-      <p>Price: R$<%= @schedule.room.price %></p>
-      <p>Start time: <%= readable_time(@schedule.start_time) %></p>
-      <p>End time: <%= readable_time(@schedule.end_time) %></p>
-      <p>Created at: <%= readable_time(@schedule.created_at) %></p>
-      <% if @schedule.created_at < @schedule.updated_at %>
-          <p>Updated at: <%= readable_time(@schedule.updated_at) %></p>
-      <% end %>
       <% if policy(@schedule).edit? %>
         <button type="button" class="btn btn-light"><%= link_to "Edit", edit_schedule_path(@schedule) %></button>
         <button type="button" class="btn btn-light"><%= link_to "Delete", schedule_path(@schedule), method: :delete, data: {confirm: "Are you sure?"} %></button>
       <% end %>
-    <button type="button" class="btn btn-light"><%= link_to 'Back', room_path(@schedule.room.id) %></button>
+      <p class="mt-3"><strong>Booked by:</strong>  <%= @schedule.user.name %> from apto <%= @schedule.user.apartments.find_by(building_id: @schedule.room.building_id).apt_number %></p>
+      <p><strong>Price:</strong>  R$<%= @schedule.room.price %></p>
+      <p><strong>Period:</strong> from <%= readable_time(@schedule.start_time) %> to <%= readable_time(@schedule.end_time) %></p>
+      <p><strong>Created at:</strong>  <%= readable_time(@schedule.created_at) %></p>
+      <% if @schedule.created_at < @schedule.updated_at %>
+          <p><strong>Updated at:</strong> <%= readable_time(@schedule.updated_at) %></p>
+      <% end %>
+    </div>
+    <button type="button" class="btn btn-light mt-2"><%= link_to 'Back', room_path(@schedule.room.id) %></button>
     </col-6>
   </div>
 </div>
