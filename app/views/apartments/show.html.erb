@@ -1,8 +1,10 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row justify-content-center">
-    <col-6 class="col-md-10">
+    <div class="col-md-10">
+    <div class="row justify-content-between">
+    <div class="col-md-6">
     <h1>Apartment <%= @apartment.apt_number %></h1>
-    <p><strong>Building: </strong><%= @apartment.building.building_name %></p>
+    <p><strong>Building: </strong><%= link_to @apartment.building.building_name, building_path(@apartment.building) %></p>
       <% if policy(@apartment).admin_view? %>       
         <p><strong>Owner: </strong><%= @apartment.user.name %></p>
         <p><strong>Bill: </strong>R$<%= @apartment.bill_cents %></p>
@@ -15,8 +17,11 @@
         <p><strong>Your debits: </strong>R$<%= @apartment.unpaid %></p>
         <p><strong>Debits overdue: </strong>R$<%= @apartment.unpaid_delay %></p>
       <% end %>
+      </div>
+      <div class="col-md-4 mr-2"><%= image_tag("apto-2.png", size: '200x300', class: '') %>
+      </div></div>
 
-      <div class="card-schedule mt-5 mb-3">
+      <div class="card-schedule mb-3 mt-5">
       <h3 class="text-center">Payments</h3>
       <div class="text-center mb-2">
         <%= form_tag orders_path, method: :post %>

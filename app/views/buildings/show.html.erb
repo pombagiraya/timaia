@@ -95,7 +95,7 @@
       <div class="notification card-product mt-3">
         <div class="notification-content">
           <h5><%= link_to room.name, room_path(room) %></h5>
-          <p>Price per rental: R$<%= room.price %><p>
+          <p>Price per rental: R$<%= room.price.to_i %><p>
         </div>
         
         <div class="notification-actions">
