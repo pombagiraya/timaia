@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-6 class="col-md-7">
-      <h1>Edit schedule of room <%= @schedule.room.name %></h1>
+      <h1>Edit schedule of living area <%= @schedule.room.name %></h1>
       <%= simple_form_for [ @room, @schedule ] do |f| %>
         <%= f.input :start_time, :minute_step => 30 %>
         <%= f.input :end_time, :minute_step => 30  %>
