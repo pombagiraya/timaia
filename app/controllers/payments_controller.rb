@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
     before_action :find_payment, only: [:destroy, :edit, :update, :show]
-    before_action :find_apartment, only: [ :new, :create, :index, :show]
+    before_action :find_apartment, only: [:create, :index, :show]
 
     def index
       @payments = policy_scope(Payment)
@@ -11,6 +11,11 @@ class PaymentsController < ApplicationController
     end
   
     def new
+      if params[:param_1] == "schedule"
+        find_apartment_user
+      else
+        find_apartment
+      end
       @order = current_user.orders.where(state: 'pending').find(params[:order_id])
       authorize(@order)
     end
@@ -59,6 +64,10 @@ class PaymentsController < ApplicationController
       @payment = Payment.find(params[:id])
       authorize(@payment)
     end
+
+    def find_apartment_user
+      @apartment = Apartment.find_by(["user_id = ?", current_user.id])
+    end    
   
     def find_apartment
       @apartment = Apartment.find(params[:apartment_id])

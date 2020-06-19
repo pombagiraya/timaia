@@ -14,6 +14,38 @@
       <% if @schedule.created_at < @schedule.updated_at %>
           <p><strong>Updated at:</strong> <%= readable_time(@schedule.updated_at) %></p>
       <% end %>
+
+      <div class="mt-5 mb-3">
+      <h3 class="text-center">Payment</h3>
+      <div class="text-center mb-2">
+        <%= form_tag orders_path(:param_1=>"schedule"), method: :post %>
+        <%= hidden_field_tag 'apartment_id', @schedule.id %>
+        <%= submit_tag 'Create Payment', class: 'btn btn-light' %>
+      </div>
+
+      <% unless @orders.nil? %>
+      <table class="table table-borderless">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Status.</th>
+            <th scope="col">Value</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.created_at.to_date %></td>
+              <td><%= order.state.capitalize %></td>
+              <td>R$<%= order.amount %></td>
+              <td><button type="button" class="btn btn-light"><%= link_to "Pay", new_order_payment_path(order, apartment_id: @schedule.id, :param_1=>"schedule") %></button></td>
+            </tr>
+          <% end %>
+        </tbodyd>
+      </table>
+      <% end %>
+
     </div>
     <button type="button" class="btn btn-light mt-2"><%= link_to 'Back', room_path(@schedule.room.id) %></button>
     </col-6>
