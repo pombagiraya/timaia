@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <col-4 class="col-md-6">
-      <h1 class="mb-3">New Room at <%= @building.building_name %></h1>
+      <h1 class="mb-3">New Living Area at <%= @building.building_name %></h1>
       <%= simple_form_for [ @building, @room] do |f| %>
         <%= f.input :name %>
         <%= f.input :price %>

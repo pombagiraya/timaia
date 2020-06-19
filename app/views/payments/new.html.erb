@@ -4,7 +4,7 @@
       <div class="row justify-content-between">
         <div class="col-md-5">
           <h1>Checkout summary</h1>
-          <p>Bill of Apto <strong><%= @order.apartment.apt_number %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>
+          <p>Apartment bill <strong><%= @order.apartment.apt_number %></strong> for <strong><%= humanized_money_with_symbol @order.amount %></strong></p>
           <button id="pay" class="btn btn-primary">Pay</button>
           <script src="https://js.stripe.com/v3/"></script>
           <script>
