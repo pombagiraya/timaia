@@ -5,16 +5,16 @@
     <p><strong>Building: </strong><%= @apartment.building.building_name %></p>
       <% if policy(@apartment).admin_view? %>       
         <p><strong>Owner: </strong><%= @apartment.user.name %></p>
-        <p><strong>Bill: </strong>  <%= @apartment.bill_cents %></p>
+        <p><strong>Bill: </strong>R$<%= @apartment.bill_cents %></p>
         <p><strong>Total Unpaid: </strong>R$<%= @apartment.unpaid %></p>
         <p><strong>Total Unpaid and Overdue: </strong>R$<%= @apartment.unpaid_delay %></p>
         <button type="button" class="btn btn-light"><%= link_to "Edit", edit_apartment_path(@apartment) %></button>
         <button type="button" class="btn btn-light"><%= link_to "Delete", apartment_path(@apartment), method: :delete, data: {confirm: "Are you sure?"} %></button>
       <% else %>
         <p><strong>Bill: </strong>R$<%= @apartment.bill_cents %></p>
-        <p><strong>Your debit: </strong>R$<%= @apartment.unpaid %></p>
+        <p><strong>Your debits: </strong>R$<%= @apartment.unpaid %></p>
         <p><strong>Debits overdue: </strong>R$<%= @apartment.unpaid_delay %></p>
-      <% end% %>
+      <% end %>
 
       <div class="card-schedule mt-5 mb-3">
       <h3 class="text-center">Payments</h3>
@@ -24,7 +24,7 @@
         <%= submit_tag 'Create Payment', class: 'btn btn-light' %>
       </div>
 
-  <% if policy(@apartment).admin_view? %>    
+    
     <table class="table table-borderless">
         <thead class="thead-light">
         <tr>
@@ -33,7 +33,7 @@
           <th scope="col">Value</th>
           <th scope="col">Actions</th>
         </tr>
-      </thead><% end %>
+      </thead>
       <tbody>
         <% @orders.each do |order| %>
           <tr>
@@ -41,10 +41,11 @@
             <td><%= order.state.capitalize %></td>
             <td>R$<%= order.amount %></td>
             <td><button type="button" class="btn btn-light"><%= link_to "Pay", new_order_payment_path(order, apartment_id: @apartment.id) %></button></td>
-            </th>
-          </td>
-      </table>
-      <% end %>
+          </tr>
+        <% end %>
+      </tbodyd>
+    </table>
+  
       </div>
     <button type="button" class="btn btn-light"><%= link_to 'Back', building_path(@building.id) %></button>
   </div>

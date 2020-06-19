@@ -12,25 +12,25 @@ class Apartment < ApplicationRecord
   validates :user_id, presence: true
 
   def unpaid
-    unpaid = 0
-    self.payments.each do |payment|
-      if payment.status == 0
-        unpaid += 1
-      end
+    unpaid = 0  
+    orders = Order.where(apartment: self)
+    unpaid_orders = orders.where(state: 'pending')
+    unpaid_orders.each do |order|
+      unpaid += order.amount_cents
     end
-    unpaid *= self.bill_cents
-    return unpaid
+    return unpaid/100
   end
 
   def unpaid_delay
-    unpaid_delay = 0
-    self.payments.each do |payment|
-      if payment.status == 0 && payment.payment_date <= Date.today
-        unpaid_delay += 1
+    unpaid = 0  
+    orders = Order.where(apartment: self)
+    unpaid_orders = orders.where(state: 'pending')
+    unpaid_orders.each do |order|
+      if order.created_at.to_date < Date.today
+        unpaid += order.amount_cents
       end
     end
-    unpaid_delay *= self.bill_cents
-    return unpaid_delay
+    return unpaid/100
   end
 
   def self.search(user)

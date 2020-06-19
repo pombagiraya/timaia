@@ -23,44 +23,47 @@ class Building < ApplicationRecord
   end
 
   def unpaid
-    unpaid = 0
+    unpaid = 0  
     self.apartments.each do |apartment|
-      apartment.payments.each do |payment|
-        if payment.status == 0
-          unpaid += apartment.bill_cents
-        end
+      orders = Order.where(apartment: apartment)
+      unpaid_orders = orders.where(state: 'pending')
+      unpaid_orders.each do |order|
+        unpaid += order.amount_cents
       end
     end
-    return unpaid
+    return unpaid/100
   end
 
   def unpaid_delay
-    unpaid_delay = 0
+    unpaid = 0  
     self.apartments.each do |apartment|
-      apartment.payments.each do |payment|
-        if payment.status == 0 && payment.payment_date <= Date.today
-          unpaid_delay += apartment.bill_cents
+      orders = Order.where(apartment: apartment)
+      unpaid_orders = orders.where(state: 'pending')
+      unpaid_orders.each do |order|
+        if order.created_at.to_date < Date.today
+          unpaid += order.amount_cents
         end
       end
     end
-    return unpaid_delay
+    return unpaid/100
   end
 
   def default_rate
-    default_rate = 0
+    unpaid = 0.0
+    total = 0.0
     self.apartments.each do |apartment|
-      apto_unpaid = 0
-      apartment.payments.each do |payment|
-        if payment.status == 0
-          apto_unpaid += apartment.bill_cents
+      orders = Order.where(apartment: apartment)
+      orders.each do |order|
+        if order.state == 'pending'
+          unpaid += order.amount_cents
         end
+        total += order.amount_cents
       end
-      default_rate += 1 if apto_unpaid > 0
     end
-    index = ((default_rate*1.00 / self.apartments.count*1.00)* 100.0).round(1)
+    index = (unpaid/total * 100).round(1)
     return index.to_f.nan? ? 0.0 : index 
   end
-
+  
   def self.import(file)
     workbook = RubyXL::Parser.parse(file)
     worksheet = workbook[0]
