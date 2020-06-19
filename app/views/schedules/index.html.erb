@@ -10,9 +10,9 @@
       <table class="table table-borderless mt-3">
           <thead class="thead-light">
           <tr>
-            <th scope="col">Building</th>
+            <% if policy(@schedules).admin_view? %><th scope="col">Building</th><% end %>
             <th scope="col">Room</th>
-            <th scope="col">Apto</th>
+            <% if policy(@schedules).admin_view? %><th scope="col">Apto</th><% end %>
             <th scope="col">Start Time</th>
             <th scope="col">End Time</th>
             <th scope ="col">Price</th>
