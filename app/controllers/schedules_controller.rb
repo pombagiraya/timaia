@@ -7,6 +7,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
+    @orders = Order.where(["user_id = ? and amount_cents = ?", current_user.id, @schedule.room.price.to_i*100])
   end
 
   def new
@@ -29,8 +30,8 @@ class SchedulesController < ApplicationController
     authorize(@schedule)
     if @schedule.save
       ScheduleMailer.with(schedule: @schedule, user: current_user).room_scheduled.deliver_now!
-      redirect_to room_path(@room.id)
-      flash[:notice] = "Schedule created."
+      redirect_to schedule_path(@schedule.id)
+      flash[:notice] = "Schedule created and payment pending."
     else
       @apartments = Apartment.where(building_id: @room.building_id)
       @users = User.all.where(:id => @apartments.pluck(:user_id))
